@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "966840099559",
+    "firebase_url": "https://yoruba-caputre.firebaseio.com",
+    "project_id": "yoruba-caputre",
+    "storage_bucket": "yoruba-caputre.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966840099559:android:f58d74fb8057bd18c2b842",
+        "android_client_info": {
+          "package_name": "com.dennytech.yorubacapture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966840099559-ni60kpu248br7h4331vcvo2qfrnpo93f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dennytech.yorubacapture",
+            "certificate_hash": "05108368d28ee56cd45242e04e2e60a511653323"
+          }
+        },
+        {
+          "client_id": "966840099559-rgpuhq5k7eei9d8b2k50miql9qvc92e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0_RgChtY-IC_rcXn-uE-TxDik2l0KxxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966840099559-rgpuhq5k7eei9d8b2k50miql9qvc92e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
