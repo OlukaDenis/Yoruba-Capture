@@ -1,24 +1,28 @@
 package com.dennytech.yorubacapture.ui.login;
 
+import android.app.Application;
+
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
-
-import com.dennytech.yorubacapture.data.LoginDataSource;
-import com.dennytech.yorubacapture.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
+    private Application application;
+
+    public LoginViewModelFactory(Application application) {
+        this.application = application;
+    }
 
     @NonNull
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            return (T) new LoginViewModel(LoginRepository.getInstance(new LoginDataSource()));
+            return (T) new LoginViewModel(application);
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

@@ -1,70 +1,38 @@
 package com.dennytech.yorubacapture.ui.login;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.app.Application;
 import android.util.Patterns;
 
-import com.dennytech.yorubacapture.data.LoginRepository;
-import com.dennytech.yorubacapture.data.Result;
-import com.dennytech.yorubacapture.data.model.LoggedInUser;
-import com.dennytech.yorubacapture.R;
+import com.dennytech.yorubacapture.data.model.User;
+import com.dennytech.yorubacapture.data.repository.DataRepository;
+
+import java.util.List;
 
 public class LoginViewModel extends ViewModel {
+    private DataRepository repository;
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
-    private LoginRepository loginRepository;
-
-    LoginViewModel(LoginRepository loginRepository) {
-        this.loginRepository = loginRepository;
+    public LoginViewModel(Application application) {
+       repository = new DataRepository(application);
     }
 
-    LiveData<LoginFormState> getLoginFormState() {
-        return loginFormState;
-    }
-
-    LiveData<LoginResult> getLoginResult() {
-        return loginResult;
-    }
-
-    public void login(String username, String password) {
-        // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
-
-        if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
-        } else {
-            loginResult.setValue(new LoginResult(R.string.login_failed));
-        }
-    }
-
-    public void loginDataChanged(String username, String password) {
-        if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
-        } else {
-            loginFormState.setValue(new LoginFormState(true));
-        }
+    public User getUser(String email) {
+        return repository.getUser(email);
     }
 
     // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
-            return false;
-        }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
-        } else {
-            return !username.trim().isEmpty();
-        }
+    public boolean isUserNameValid(String email) {
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     // A placeholder password validation check
-    private boolean isPasswordValid(String password) {
+    public boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
+    }
+
+    public LiveData<List<User>> getAllUsers() {
+        return repository.allUsers();
     }
 }
