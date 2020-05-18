@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "966840099559",
-    "firebase_url": "https://yoruba-caputre.firebaseio.com",
-    "project_id": "yoruba-caputre",
-    "storage_bucket": "yoruba-caputre.appspot.com"
+    "project_number": "1082426332914",
+    "firebase_url": "https://data-capture-2b7d1.firebaseio.com",
+    "project_id": "data-capture-2b7d1",
+    "storage_bucket": "data-capture-2b7d1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:966840099559:android:f58d74fb8057bd18c2b842",
+        "mobilesdk_app_id": "1:1082426332914:android:fdafcb84e8dd4fef46a26b",
         "android_client_info": {
-          "package_name": "com.dennytech.yorubacapture"
+          "package_name": "com.dennytech.datacapture"
         }
       },
       "oauth_client": [
         {
-          "client_id": "966840099559-ni60kpu248br7h4331vcvo2qfrnpo93f.apps.googleusercontent.com",
+          "client_id": "1082426332914-nlda30tc08j5dpid03hgjug555dfqjor.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dennytech.yorubacapture",
+            "package_name": "com.dennytech.datacapture",
             "certificate_hash": "05108368d28ee56cd45242e04e2e60a511653323"
           }
         },
         {
-          "client_id": "966840099559-rgpuhq5k7eei9d8b2k50miql9qvc92e6.apps.googleusercontent.com",
+          "client_id": "1082426332914-0mhhard3d19h57oeon8jfvlfekeaeemd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA0_RgChtY-IC_rcXn-uE-TxDik2l0KxxM"
+          "current_key": "AIzaSyAFHugvxBnBlmXz96l4ffOVWdskQ5PMmdc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "966840099559-rgpuhq5k7eei9d8b2k50miql9qvc92e6.apps.googleusercontent.com",
+              "client_id": "1082426332914-0mhhard3d19h57oeon8jfvlfekeaeemd.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
