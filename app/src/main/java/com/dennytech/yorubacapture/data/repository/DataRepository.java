@@ -2,9 +2,13 @@ package com.dennytech.yorubacapture.data.repository;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
 import com.dennytech.yorubacapture.data.db.AppDatabase;
 import com.dennytech.yorubacapture.data.db.UserDao;
 import com.dennytech.yorubacapture.data.model.User;
+
+import java.util.List;
 
 public class DataRepository {
     private AppDatabase database;
@@ -19,15 +23,15 @@ public class DataRepository {
         userDao.addUser(user);
     }
 
-    private void defaultUsers() {
-        User user = new User();
-        user.setEmail("admin@gmail.com");
-        user.setName("Admin");
-
-        userDao.addUser(user);
+    public User getUser(String email) {
+        return userDao.getUser(email);
     }
 
-    private void getUser(String id) {
-        userDao.getUser(id);
+    public void deleteUser(User user){
+        userDao.deleteUser(user);
+    }
+
+    public LiveData<List<User>> allUsers() {
+        return userDao.getAllUsers();
     }
 }

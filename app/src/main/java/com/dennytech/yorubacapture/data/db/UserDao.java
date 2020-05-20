@@ -27,8 +27,8 @@ public interface UserDao  {
     @Query("SELECT * FROM users")
     LiveData<List<User>> getAllUsers();
 
-    @Query("SELECT * FROM users WHERE id == :id")
-    User getUser(String id);
+    @Query("SELECT * FROM users WHERE email == :email LIMIT 1")
+    User getUser(String email);
 
     @Delete
     void deleteUser(User user);
