@@ -8,17 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1082426332914:android:fdafcb84e8dd4fef46a26b",
+        "mobilesdk_app_id": "1:1082426332914:android:df39dd8b4d309ad746a26b",
         "android_client_info": {
-          "package_name": "com.dennytech.datacapture"
+          "package_name": "com.dennytech.plyss"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1082426332914-nlda30tc08j5dpid03hgjug555dfqjor.apps.googleusercontent.com",
+          "client_id": "1082426332914-kss7s8if8s1tjursi7u74k5nvdsdl22v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.dennytech.datacapture",
+            "package_name": "com.dennytech.plyss",
             "certificate_hash": "05108368d28ee56cd45242e04e2e60a511653323"
           }
         },

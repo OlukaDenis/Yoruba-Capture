@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.dennytech.datacapture.ui.home.HomeFragment"
+        android:name="com.dennytech.plyss.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,13 +17,13 @@
 
     <fragment
         android:id="@+id/navigation_data"
-        android:name="com.dennytech.datacapture.ui.captures.CapturesFragment"
+        android:name="com.dennytech.plyss.ui.captures.CapturesFragment"
         android:label="@string/title_captures"
         tools:layout="@layout/fragment_captures" />
 
     <fragment
         android:id="@+id/navigation_add_form"
-        android:name="com.dennytech.datacapture.ui.add_form.AddFormFragment"
+        android:name="com.dennytech.plyss.ui.add_form.AddFormFragment"
         android:label="@string/title_add_form"
         tools:layout="@layout/fragment_add_form" />
 </navigation>
