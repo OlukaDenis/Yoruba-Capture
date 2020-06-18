@@ -18,6 +18,7 @@ public class Form {
     private String voters_reg_number;
     private String date_of_capture;
     private String time_of_capture;
+    private String image;
 
     public Form() {
     }
@@ -156,5 +157,13 @@ public class Form {
 
     public void setTime_of_capture(String time_of_capture) {
         this.time_of_capture = time_of_capture;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

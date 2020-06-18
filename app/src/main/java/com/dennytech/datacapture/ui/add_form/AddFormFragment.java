@@ -1,45 +1,71 @@
 package com.dennytech.datacapture.ui.add_form;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.dennytech.datacapture.R;
+import com.dennytech.datacapture.data.local.LocalDataSource;
 import com.dennytech.datacapture.data.model.Form;
 import com.dennytech.datacapture.utils.AppGlobals;
 import com.dennytech.datacapture.utils.AppUtils;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.IOException;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.app.Activity.RESULT_OK;
+import static com.dennytech.datacapture.utils.AppGlobals.PICK_IMAGE_REQUEST;
+
 public class AddFormFragment extends Fragment {
+    private static final String TAG = "AddFormFragment";
     private EditText fname;
     private EditText lname;
     private EditText phone;
     private EditText address;
-    private EditText marital_status;
-    private EditText state_origin;
-    private EditText state_residence;
+    private AutoCompleteTextView marital_status;
+    private AutoCompleteTextView state_origin;
+    private AutoCompleteTextView state_residence;
     private EditText email;
-    private EditText gender;
+    private AutoCompleteTextView gender;
     private EditText lga_origin;
     private EditText lga_residence;
     private EditText vin;
     private EditText occupation;
     private EditText date_of_birth;
     private ProgressBar loading_add;
+    private ImageView image;
+    private ImageButton add_image;
+    private Uri filePath;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
 
     @BindView(R.id.add_form_data_btn)
     Button add_form_data_btn;
@@ -64,6 +90,9 @@ public class AddFormFragment extends Fragment {
         mFirebaseAnalytics.setCurrentScreen(requireActivity(), this.getClass().getSimpleName(),
                 this.getClass().getSimpleName());
 
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+
         form = new Form();
 
         //views
@@ -82,11 +111,40 @@ public class AddFormFragment extends Fragment {
         lga_origin = root.findViewById(R.id.form_lga_origin);
         lga_residence = root.findViewById(R.id.form_lga_residence);
         loading_add = root.findViewById(R.id.loading_add);
+        image = root.findViewById(R.id.data_image);
+        add_image = root.findViewById(R.id.add_image_btn);
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
 
+        ArrayAdapter originAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
+        state_origin.setAdapter(originAdapter);
+        state_origin.setKeyListener(null);
+
+        ArrayAdapter residenceAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
+        state_residence.setKeyListener(null);
+        state_residence.setAdapter(residenceAdapter);
+
+
+
+        ArrayAdapter genderAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.GENDER);
+        gender.setKeyListener(null);
+        gender.setAdapter(genderAdapter);
+
+        ArrayAdapter maritalAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.GENDER);
+        marital_status.setKeyListener(null);
+        marital_status.setAdapter(maritalAdapter);
+
+        add_image.setOnClickListener(v -> selectImage());
+
         return root;
+    }
+
+    private void selectImage() {
+        Intent imageIntent = new Intent();
+        imageIntent.setAction(Intent.ACTION_GET_CONTENT);
+        imageIntent.setType("image/*");
+        requireActivity().startActivityForResult(Intent.createChooser(imageIntent, "Select image"), PICK_IMAGE_REQUEST);
     }
 
     private void openHome() {
@@ -197,5 +255,40 @@ public class AddFormFragment extends Fragment {
         add_form_data_btn.setEnabled(false);
         loading_add.setVisibility(View.VISIBLE);
         add_form_data_btn.setBackgroundResource(R.drawable.inactive_button_bg);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
+
+            filePath = data.getData();
+            image.setImageURI(filePath);
+        }
+    }
+
+    private static int calculateInSampleSize(
+            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 }

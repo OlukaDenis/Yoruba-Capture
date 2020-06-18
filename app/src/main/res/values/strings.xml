@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Yoruba Caputre</string>
+    <string name="app_name">Y.P.S.D</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -14,7 +14,7 @@
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="signup">Signup</string>
-    <string name="already_signup">Already signup?</string>
+    <string name="already_signup">Or signup now </string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -39,4 +39,7 @@
     <string name="add_new_data">Add New Data</string>
     <string name="captured_by">Captured by:  %1$s</string>
     <string name="dash">--</string>
+    <string name="y_p_s_d">Y . P . S . D</string>
+    <string name="yoruba_plateau_statistical_data">Yoruba Plateau Statistical Data</string>
+    <string name="capture_data">Capture Data</string>
 </resources>

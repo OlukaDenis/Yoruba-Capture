@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseFirestore db;
 
-    private FloatingActionButton open_form;
+    private Button open_form;
     @BindView(R.id.user_name)
     TextView userName;
     TextView capturedData;

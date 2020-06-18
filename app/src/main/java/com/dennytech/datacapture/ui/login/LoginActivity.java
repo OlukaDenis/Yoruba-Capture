@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, user.getName()+" Welcome", Toast.LENGTH_SHORT).show();
                     AppGlobals.logged_in_user_email = user.getEmail();
                     startActivity(new Intent(this, HomeActivity.class));
+                    finish();
                 }
 
             } else {
