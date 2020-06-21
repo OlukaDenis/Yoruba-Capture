@@ -96,13 +96,23 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/fab_add_data"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="70dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="64dp"
+        android:drawablePadding="10dp"
+        android:layout_marginEnd="48dp"
+        android:hapticFeedbackEnabled="true"
+        android:background="@drawable/button_background"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_add"/>
+        android:layout_marginBottom="80dp"
+        android:textColor="@color/white"
+        android:text="@string/capture_data" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

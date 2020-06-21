@@ -1,0 +1,76 @@
+
+l	java:S117É"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…Àõíúÿÿÿÿ
+l	java:S117Ã"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ˆ‰İ€úÿÿÿÿ
+V
+java:S1128/"9Remove this unused import 'com.squareup.picasso.Picasso'.(£œ¿×8Ö¾Ë¬.
+Y	java:S125³"<This block of commented-out lines of code should be removed.(½‹Ä¯8Ú§¤Ì¬.
+g	java:S117Ç"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‰¾Ä
+^	java:S125¾"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8È˜©Ì¬.
+w
+java:S1450["ZRemove the "crashlytics" field and declare it as a local variable in the relevant methods.(¨Š‹¤8ÔƒòÉ¬.
+h
+java:S1128("KRemove this unused import 'com.google.android.gms.tasks.OnSuccessListener'.(íå¡8…ãÂÊ¬.
+r	java:S116P"VRename this field "loading_add" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦ÙÍ8äşÒÈ¬.
+n	java:S116F"YRename this field "marital_status" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’ñºù
+}	java:S116^"\Rename this field "add_form_data_btn" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ıÏäùÿÿÿÿ8äşÒÈ¬.
+^	java:S125¤"<This block of commented-out lines of code should be removed.(Ãİİ‘øÿÿÿÿ8¬ş¯Ì¬.
+o	java:S116K"URename this field "lga_origin" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔÆºÿÿÿÿÿ
+^	java:S125¦"<This block of commented-out lines of code should be removed.(ß˜²şûÿÿÿÿ8¬ş¯Ì¬.
+z
+java:S1450R"XRemove the "add_image" field and declare it as a local variable in the relevant methods.(ä”Õêûÿÿÿÿ8äşÒÈ¬.
+^	java:S125¹"<This block of commented-out lines of code should be removed.(Œ²¨Äøÿÿÿÿ8È˜©Ì¬.
+L
+java:S1144˜".Remove this unused private "enableBtn" method.(Ò³çû8äşÒÈ¬.
+l	java:S117Ë"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(çõı½úÿÿÿÿ
+g	java:S117À"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Á±ïÔ
+g	java:S117È"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ë§©â
+n
+java:S1192Ğ"PDefine a constant instead of duplicating this literal "Field required" 14 times.(ì‡Ä¦8äşÒÈ¬.
+m
+java:S1128,"KRemove this unused import 'com.google.firebase.storage.OnProgressListener'.(ªÄ¤úÿÿÿÿ8æÉÊÊ¬.
+V
+java:S11281":Remove this unused import 'java.io.ByteArrayOutputStream'.(Î‡È8Ù†¬Ë¬.
+X	java:S125´"<This block of commented-out lines of code should be removed.(áº—_8È˜©Ì¬.
+f	java:S117Á"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á»ı#
+K
+java:S11286".Remove this unused import 'java.util.Objects'.(¼¸õ›8éß÷É¬.
+y	java:S116L"XRename this field "lga_residence" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Œì—òùÿÿÿÿ8äşÒÈ¬.
+n	java:S117Í"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(á›”™8äşÒÈ¬.
+g	java:S117Å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õé¹æ
+^	java:S125­"<This block of commented-out lines of code should be removed.(¼è÷ïøÿÿÿÿ8¬ş¯Ì¬.
+L
+java:S1128"0Remove this unused import 'android.util.Base64'.(ìÔ×[8Ù†¬Ë¬.
+l	java:S117Ì"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ú·Ïüÿÿÿÿ
+{
+java:S1450Y"^Remove the "firebaseStorage" field and declare it as a local variable in the relevant methods.(Â‹Ğí8öè‡É¬.
+g	java:S117Æ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßŒ¹Ä
+v	java:S116H"ZRename this field "state_residence" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âóÑÿ8äşÒÈ¬.
+P
+java:S1128"4Remove this unused import 'android.graphics.Bitmap'.(¾ì8Ù†¬Ë¬.
+X	java:S125À"<This block of commented-out lines of code should be removed.(È´³X8È˜©Ì¬.
+e
+java:S1128."CRemove this unused import 'com.google.firebase.storage.UploadTask'.(®ğÇıÿÿÿÿ8æÉÊÊ¬.
+r
+java:S1128="PRemove this unused import 'com.dennytech.plyss.utils.AppGlobals.CAMERA_REQUEST'.(Áİ¬»ûÿÿÿÿ8§“¤Ì¬.
+g	java:S117Ä"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óüÆ
+^	java:S125¨"<This block of commented-out lines of code should be removed.(‘¹ƒııÿÿÿÿ8² ñË¬.
+Y	java:S125·"<This block of commented-out lines of code should be removed.(é—¸¬8È˜©Ì¬.
+m
+java:S1128'"KRemove this unused import 'com.google.android.gms.tasks.OnFailureListener'.(ï¿ŞŞúÿÿÿÿ8¥ßÈÊ¬.
+^	java:S125°"<This block of commented-out lines of code should be removed.(£Áëšüÿÿÿÿ8¬ş¯Ì¬.
+g	java:S117Ê"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä¢’á
+[
+java:S1172g"9Remove this unused method parameter "savedInstanceState".(©ó‘ãøÿÿÿÿ8äşÒÈ¬.
+]
+java:S1128";Remove this unused import 'android.graphics.BitmapFactory'.(âàºÍûÿÿÿÿ8»èÎÊ¬.
+I
+java:S1068A"'Remove this unused "TAG" private field.(ë»ã ÿÿÿÿÿ8˜óùÉ¬.
+r	java:S116O"XRename this field "date_of_birth" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÂÀµ¹øÿÿÿÿ
+Y	java:S125Ã"<This block of commented-out lines of code should be removed.(£¾æï8È˜©Ì¬.
+l	java:S116G"WRename this field "state_origin" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æŸ§å
+W
+java:S1128":Remove this unused import 'android.content.res.Resources'.(ÿÃÜó8Ö¾Ë¬.
+O
+java:S1128"-Remove this unused import 'android.util.Log'.(Ô¦Ø²øÿÿÿÿ8˜óùÉ¬.
+g	java:S117Â"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•ÖëÍ
+u	java:S116R"TRename this field "add_image" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä”Õêûÿÿÿÿ8äşÒÈ¬.
