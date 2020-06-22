@@ -14,9 +14,12 @@ import com.dennytech.plyss.data.model.Form;
 import com.dennytech.plyss.data.model.State;
 import com.dennytech.plyss.data.model.User;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,26 +117,26 @@ public class DataRepository {
 
         call.enqueue(new Callback<List<State>>() {
             @Override
-            public void onResponse(Call<List<State>> call, Response<List<State>> response) {
+            public void onResponse(@NotNull Call<List<State>> call, @NotNull Response<List<State>> response) {
 
                 if (response.isSuccessful()) {
-                    List<State> stateList = response.body();
-                    List<String> strings = new ArrayList<>();
+                    if (response.body() != null) {
+                        List<State> stateList = response.body();
+                        List<String> strings = new ArrayList<>();
 
-                    for (int i = 0; i < stateList.size(); i++) {
-                        strings.add(stateList.get(i).getName());
-//                            Log.i(TAG, "State at "+ i +":" +stateList.get(i).getName());
+                        for (int i = 0; i < stateList.size(); i++) {
+                            strings.add(stateList.get(i).getName());
+                        }
+
+                        LocalDataSource.ALL_STATES = strings;
                     }
-
-                    LocalDataSource.ALL_STATES = strings;
-//                        Log.d(TAG, "States List: "+strings);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<State>> call, Throwable t) {
+            public void onFailure(@NotNull Call<List<State>> call, @NotNull Throwable t) {
                 Log.e(TAG, "States onFailure: ", t);
-
+                FirebaseCrashlytics.getInstance().recordException(t);
             }
         });
     }

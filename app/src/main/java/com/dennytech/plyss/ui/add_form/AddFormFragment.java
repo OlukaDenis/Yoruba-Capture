@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -32,8 +33,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.dennytech.plyss.R;
+import com.dennytech.plyss.data.api.ApiClient;
+import com.dennytech.plyss.data.api.ApiService;
 import com.dennytech.plyss.data.local.LocalDataSource;
 import com.dennytech.plyss.data.model.Form;
+import com.dennytech.plyss.data.model.State;
 import com.dennytech.plyss.utils.AppGlobals;
 import com.dennytech.plyss.utils.AppUtils;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,16 +50,23 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 import static com.dennytech.plyss.utils.AppGlobals.CAMERA_REQUEST;
@@ -72,8 +83,8 @@ public class AddFormFragment extends Fragment {
     private AutoCompleteTextView state_residence;
     private EditText email;
     private AutoCompleteTextView gender;
-    private EditText lga_origin;
-    private EditText lga_residence;
+    private AutoCompleteTextView lga_origin;
+    private AutoCompleteTextView lga_residence;
     private EditText vin;
     private EditText occupation;
     private EditText date_of_birth;
@@ -97,6 +108,9 @@ public class AddFormFragment extends Fragment {
     private NavController navController;
 
     private Form form;
+
+    private List<String> stateOriginLgas = new ArrayList<>();
+    private List<String> stateResidenceLgas = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -143,22 +157,88 @@ public class AddFormFragment extends Fragment {
         ArrayAdapter originAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
         state_origin.setAdapter(originAdapter);
         state_origin.setKeyListener(null);
+        state_origin.setOnItemClickListener((parent, view, position, id) -> {
+            Object obj = parent.getItemAtPosition(position);
+            getOriginStateLgas(obj.toString());
+        });
 
         ArrayAdapter residenceAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
         state_residence.setKeyListener(null);
         state_residence.setAdapter(residenceAdapter);
+        state_residence.setOnItemClickListener((parent, view, position, id) -> {
+            Object obj = parent.getItemAtPosition(position);
+            getResidenceStateLgas(obj.toString());
+        });
+
+        lga_origin.setOnClickListener(v -> getOriginStateLgas(state_origin.getText().toString()));
+        lga_residence.setOnClickListener(v -> getResidenceStateLgas(state_residence.getText().toString()));
 
         ArrayAdapter genderAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.GENDER);
         gender.setKeyListener(null);
         gender.setAdapter(genderAdapter);
 
-        ArrayAdapter maritalAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.GENDER);
+        ArrayAdapter maritalAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.MARITAL_STATUS);
         marital_status.setKeyListener(null);
         marital_status.setAdapter(maritalAdapter);
 
         add_image.setOnClickListener(v -> selectImage());
 
         return root;
+    }
+
+    private void getOriginStateLgas(String state) {
+        Log.d(TAG, "getStateLgas called .....: ");
+        //Fetching states
+        ApiService service = ApiClient.getApiService(ApiService.class);
+        Call<List<String>> call = service.getStateLgas(state);
+
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(@NotNull Call<List<String>> call, @NotNull Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        List<String> lgas = response.body();
+                        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, lgas);
+                        lga_origin.setKeyListener(null);
+                        lga_origin.setAdapter(lgaOriginAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<List<String>> call, @NotNull Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+                crashlytics.recordException(t);
+            }
+        });
+    }
+
+    private void getResidenceStateLgas(String state) {
+        Log.d(TAG, "getStateLgas called .....: ");
+        //Fetching states
+        ApiService service = ApiClient.getApiService(ApiService.class);
+        Call<List<String>> call = service.getStateLgas(state);
+
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(@NotNull Call<List<String>> call, @NotNull Response<List<String>> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        List<String> lgas = response.body();
+
+                        ArrayAdapter lgaResAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, lgas);
+                        lga_residence.setKeyListener(null);
+                        lga_residence.setAdapter(lgaResAdapter);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<List<String>> call, @NotNull Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+                crashlytics.recordException(t);
+            }
+        });
     }
 
     private void selectImage() {

@@ -1,11 +1,11 @@
 
 q
 java:S1450"VRemove the "adapter" field and declare it as a local variable in the relevant methods.(ºë‰Ëùÿÿÿÿ
-v
-java:S1450"`Remove the "capturesViewModel" field and declare it as a local variable in the relevant methods.(×ŸÈ­
-r
-java:S1450"\Remove the "layoutManager" field and declare it as a local variable in the relevant methods.(üÉÙ¼
-T
-java:S1172"9Remove this unused method parameter "savedInstanceState".(©ó‘ãøÿÿÿÿ
 K
 java:S1068"5Remove this unused "capturesViewModel" private field.(×ŸÈ­
+v
+java:S1450"`Remove the "capturesViewModel" field and declare it as a local variable in the relevant methods.(×ŸÈ­
+T
+java:S1172"9Remove this unused method parameter "savedInstanceState".(©ó‘ãøÿÿÿÿ
+r
+java:S1450"\Remove the "layoutManager" field and declare it as a local variable in the relevant methods.(üÉÙ¼

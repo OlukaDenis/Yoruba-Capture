@@ -41,3 +41,11 @@ p
 @app/src/main/java/com/dennytech/plyss/ui/home/HomeViewModel.java,f/9/f91804c4dbc836da25b94a03dfc904421ac9620c
 w
 Gapp/src/main/java/com/dennytech/plyss/ui/captures/CapturesFragment.java,4/2/4270dbf98cf7987fe68a2a4a13acdae192b07cb2
+j
+:app/src/main/java/com/dennytech/plyss/data/model/Form.java,5/2/52b15083b196217fef57632fd9b0569447446143
+u
+Eapp/src/main/java/com/dennytech/plyss/data/local/LocalDataSource.java,7/b/7b3dfa203a72707f137b41477c4034cae345f26b
+k
+;app/src/main/java/com/dennytech/plyss/data/model/State.java,2/1/2123a5bee022dbfc55335f8f56fa298a4cb36e15
+m
+=app/src/main/java/com/dennytech/plyss/data/api/ApiClient.java,f/a/fa25fe02bb9f0e358b0d4ea18bd024285ead0837
