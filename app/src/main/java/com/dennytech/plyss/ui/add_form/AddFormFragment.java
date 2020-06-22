@@ -1,5 +1,6 @@
 package com.dennytech.plyss.ui.add_form;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,6 +45,7 @@ import com.dennytech.plyss.utils.AppGlobals;
 import com.dennytech.plyss.utils.AppUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.storage.FirebaseStorage;
@@ -57,6 +61,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -87,6 +92,7 @@ public class AddFormFragment extends Fragment {
     private AutoCompleteTextView lga_residence;
     private EditText vin;
     private EditText occupation;
+    private TextInputLayout dobLayout;
     private EditText date_of_birth;
     private ProgressBar loading_add;
     private ImageView image;
@@ -94,6 +100,7 @@ public class AddFormFragment extends Fragment {
 
     private String imageURL;
     private String imageNamePath;
+    private DatePickerDialog picker;
 
 
     private FirebaseStorage firebaseStorage;
@@ -141,6 +148,7 @@ public class AddFormFragment extends Fragment {
         vin = root.findViewById(R.id.form_vin);
         occupation = root.findViewById(R.id.form_occupation);
         address = root.findViewById(R.id.form_address);
+//        dobLayout = root.findViewById(R.id.form_dob_layout);
         date_of_birth = root.findViewById(R.id.form_dob);
         marital_status = root.findViewById(R.id.form_marital_status);
         state_origin = root.findViewById(R.id.form_state_origin);
@@ -153,6 +161,18 @@ public class AddFormFragment extends Fragment {
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
 
+
+        date_of_birth.setInputType(InputType.TYPE_NULL);
+        date_of_birth.setOnClickListener(v -> {
+            final Calendar cldr = Calendar.getInstance();
+            int day = cldr.get(Calendar.DAY_OF_MONTH);
+            int month = cldr.get(Calendar.MONTH);
+            int year = cldr.get(Calendar.YEAR);
+            // date picker dialog
+            picker = new DatePickerDialog(requireActivity(),
+                    (view, year1, monthOfYear, dayOfMonth) -> date_of_birth.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year1), year, month, day);
+            picker.show();
+        });
 
         ArrayAdapter originAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
         state_origin.setAdapter(originAdapter);

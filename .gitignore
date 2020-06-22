@@ -85,7 +85,7 @@ captures/
 .idea/dictionaries
 .idea/libraries
 .idea/cachesw
-.idea
+.idea/
 .gradle
 /app/build
 /app/release

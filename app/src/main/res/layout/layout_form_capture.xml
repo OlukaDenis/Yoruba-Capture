@@ -48,6 +48,7 @@
 
     </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/form_dob_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,8 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:inputType="date"
             android:hint="@string/date_of_birth"
-            android:inputType="textCapWords"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
