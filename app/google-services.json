@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1082426332914:android:ea189d2365308a5d46a26b",
+        "android_client_info": {
+          "package_name": "com.app.plyss"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082426332914-rqouvt6aoi337o7boslfmrgqa0jg9rb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.plyss",
+            "certificate_hash": "05108368d28ee56cd45242e04e2e60a511653323"
+          }
+        },
+        {
+          "client_id": "1082426332914-0mhhard3d19h57oeon8jfvlfekeaeemd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFHugvxBnBlmXz96l4ffOVWdskQ5PMmdc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082426332914-0mhhard3d19h57oeon8jfvlfekeaeemd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1082426332914:android:df39dd8b4d309ad746a26b",
         "android_client_info": {
           "package_name": "com.dennytech.plyss"

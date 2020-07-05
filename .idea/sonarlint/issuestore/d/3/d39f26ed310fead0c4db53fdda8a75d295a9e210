@@ -1,7 +1,0 @@
-
-G
-java:S1602Y",Remove useless curly braces around statement(ÕÊ¾øÿÿÿÿ
-R
-java:S2696€"6Make the enclosing method "static" or remove this set.(ëÛğÜıÿÿÿÿ
-V	java:S125}"<This block of commented-out lines of code should be removed.(– ‹ªøÿÿÿÿ
-W	java:S125"<This block of commented-out lines of code should be removed.(°îÓ´ùÿÿÿÿ

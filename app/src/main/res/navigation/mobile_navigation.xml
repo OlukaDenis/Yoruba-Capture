@@ -7,23 +7,43 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.dennytech.plyss.ui.home.HomeFragment"
+        android:name="com.app.plyss.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_add_form"
-            app:destination="@id/navigation_add_form" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_data"
-        android:name="com.dennytech.plyss.ui.captures.CapturesFragment"
+        android:name="com.app.plyss.ui.captured_data.CapturesFragment"
         android:label="@string/title_captures"
-        tools:layout="@layout/fragment_captures" />
+        tools:layout="@layout/fragment_captures" >
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_add_form"
-        android:name="com.dennytech.plyss.ui.add_form.AddFormFragment"
+        android:name="com.app.plyss.ui.add_form.AddFormFragment"
         android:label="@string/title_add_form"
-        tools:layout="@layout/fragment_add_form" />
+        tools:layout="@layout/fragment_add_form" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_individual_data"
+        android:name="com.app.plyss.ui.captured_data.IndividualCapturesFragment"
+        android:label="Individual Captures"
+        tools:layout="@layout/fragment_individual_captures" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_household_data"
+        android:name="com.app.plyss.ui.captured_data.HouseholdCapturesFragment"
+        android:label="Household Captures"
+        tools:layout="@layout/fragment_household_captures" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_household"
+        android:name="com.app.plyss.ui.add_form.AddHouseholdFragment"
+        android:label="Add Household Data"
+        tools:layout="@layout/fragment_add_household" >
+    </fragment>
 </navigation>
