@@ -63,8 +63,7 @@ public class DataRepository {
         return userDao.getAllUsers();
     }
 
-    public Task<Void> addDataCapture(Form form){
-        String uid = UUID.randomUUID().toString();
+    public Task<Void> addDataCapture(Form form, String uid){
         DocumentReference docRef = db.collection(INDIVIDUAL_CAPTURES).document(uid);
         return docRef.set(form);
     }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.plyss.R;
 import com.app.plyss.data.model.Form;
+import com.app.plyss.data.model.Household;
 import com.app.plyss.ui.interfaces.ItemClickListener;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -18,26 +19,26 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CaptureAdapter extends FirestoreRecyclerAdapter<Form, CaptureAdapter.CaptureViewHolder> {
+public class HouseholdCapturesAdapter extends FirestoreRecyclerAdapter<Household, HouseholdCapturesAdapter.HouseholdViewHolder> {
     private ItemClickListener itemClickListener;
 
-    public CaptureAdapter(@NonNull FirestoreRecyclerOptions<Form> options) {
+    public HouseholdCapturesAdapter(@NonNull FirestoreRecyclerOptions<Household> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull CaptureViewHolder holder, int position, @NonNull Form model) {
+    protected void onBindViewHolder(@NonNull HouseholdViewHolder holder, int position, @NonNull Household model) {
         holder.bindFilterTo(model);
     }
 
     @NonNull
     @Override
-    public CaptureViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HouseholdViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_capture, parent, false);
-        return new CaptureViewHolder(view);
+        return new HouseholdViewHolder(view);
     }
 
-    class CaptureViewHolder extends RecyclerView.ViewHolder {
+    class HouseholdViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.capture_name)
         TextView capture_name;
@@ -54,7 +55,7 @@ public class CaptureAdapter extends FirestoreRecyclerAdapter<Form, CaptureAdapte
         Resources res;
 
 
-        public CaptureViewHolder(@NonNull View itemView) {
+        public HouseholdViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             res = itemView.getResources();
@@ -66,12 +67,12 @@ public class CaptureAdapter extends FirestoreRecyclerAdapter<Form, CaptureAdapte
             });
         }
 
-        public void bindFilterTo(Form form) {
-            String name = form.getFirst_name() + " " + form.getLast_name();
+        public void bindFilterTo(Household household) {
+            String name = household.getFather_name();
             capture_name.setText(name);
-            agent_id.setText(String.format(res.getString(R.string.captured_by), form.getAgentId()));
-            capture_date.setText(form.getDate_of_capture());
-            capture_time.setText(form.getTime_of_capture());
+            agent_id.setText(String.format(res.getString(R.string.captured_by), household.getAgentId()));
+            capture_date.setText(household.getDate_of_capture());
+            capture_time.setText(household.getTime_of_capture());
         }
     }
 

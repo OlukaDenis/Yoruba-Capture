@@ -31,11 +31,13 @@ import com.app.plyss.data.api.ApiClient;
 import com.app.plyss.data.api.ApiService;
 import com.app.plyss.data.local.LocalDataSource;
 import com.app.plyss.data.model.Form;
+import com.app.plyss.data.model.User;
 import com.app.plyss.utils.AppGlobals;
 import com.app.plyss.utils.AppUtils;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -48,6 +50,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,6 +87,7 @@ public class AddFormFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
     private FirebaseCrashlytics crashlytics;
+    private FirebaseFirestore db;
 
     @BindView(R.id.add_form_data_btn)
     Button add_form_data_btn;
@@ -111,6 +115,7 @@ public class AddFormFragment extends Fragment {
         mFirebaseAnalytics.setCurrentScreen(requireActivity(), this.getClass().getSimpleName(),
                 this.getClass().getSimpleName());
         crashlytics = FirebaseCrashlytics.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
@@ -258,6 +263,9 @@ public class AddFormFragment extends Fragment {
     @OnClick(R.id.add_form_data_btn)
     void sendFormData() {
 
+        User user = addFragmentViewModel.getUser(AppGlobals.logged_in_user_email);
+        String uuid = user.getUuid();
+
         String m_fname = extractString(fname);
         String m_lname = extractString(lname);
         String m_email = extractString(email);
@@ -339,9 +347,17 @@ public class AddFormFragment extends Fragment {
             form.setTime_of_capture(AppUtils.currentTime());
             form.setImage(imageURL);
 
-            addFragmentViewModel.saveFormData(form);
-
-            openHome();
+            db.collection(AppGlobals.INDIVIDUAL_CAPTURES)
+                    .add(form)
+                    .addOnSuccessListener(documentReference -> {
+                        openHome();
+                        Toasty.success(requireActivity(), "Data saved", Toasty.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        Toasty.error(requireActivity(), "Data not saved", Toasty.LENGTH_SHORT).show();
+                        crashlytics.recordException(e);
+                        enableBtn();
+                    });
         }
     }
 

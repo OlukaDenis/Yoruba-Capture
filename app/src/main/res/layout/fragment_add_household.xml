@@ -7,6 +7,13 @@
     tools:context=".ui.add_form.AddHouseholdFragment"
     android:layout_margin="@dimen/sixteen_dp">
 
+    <ProgressBar
+        android:id="@+id/loading_household"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:padding="150dp"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,7 +36,7 @@
                     app:srcCompat="@drawable/ic_image"/>
 
                 <ImageButton
-                    android:id="@+id/add_image_btn"
+                    android:id="@+id/add_h_image_btn"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/ic_add_a_photo"

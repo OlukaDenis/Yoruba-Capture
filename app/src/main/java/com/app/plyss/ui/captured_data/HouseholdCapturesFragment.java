@@ -16,7 +16,9 @@ import android.view.ViewGroup;
 
 import com.app.plyss.R;
 import com.app.plyss.data.model.Form;
+import com.app.plyss.data.model.Household;
 import com.app.plyss.ui.adapters.CaptureAdapter;
+import com.app.plyss.ui.adapters.HouseholdCapturesAdapter;
 import com.app.plyss.utils.AppGlobals;
 import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -30,7 +32,7 @@ public class HouseholdCapturesFragment extends Fragment {
     private ShimmerRecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private FirebaseFirestore db;
-    private CaptureAdapter adapter;
+    private HouseholdCapturesAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,15 +60,15 @@ public class HouseholdCapturesFragment extends Fragment {
     }
 
     private void populateCaptures() {
-        Query filterQuery = db.collection(AppGlobals.INDIVIDUAL_CAPTURES)
+        Query filterQuery = db.collection(AppGlobals.HOUSEHOLD_CAPTURES)
                 .orderBy("date_of_capture", Query.Direction.ASCENDING);
 
-        FirestoreRecyclerOptions<Form> captureOptions = new FirestoreRecyclerOptions.Builder<Form>()
+        FirestoreRecyclerOptions<Household> captureOptions = new FirestoreRecyclerOptions.Builder<Household>()
                 .setLifecycleOwner(this)
-                .setQuery(filterQuery, Form.class)
+                .setQuery(filterQuery, Household.class)
                 .build();
 
-        adapter = new CaptureAdapter(captureOptions);
+        adapter = new HouseholdCapturesAdapter(captureOptions);
         recyclerView.setAdapter(adapter);
     }
 }
