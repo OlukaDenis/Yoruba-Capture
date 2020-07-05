@@ -16,6 +16,7 @@ public class Household {
     private String date_of_capture;
     private String time_of_capture;
     private String image;
+    private String residence;
 
     public Household() {
     }
@@ -138,5 +139,13 @@ public class Household {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getResidence() {
+        return residence;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
     }
 }

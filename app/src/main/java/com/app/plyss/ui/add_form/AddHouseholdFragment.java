@@ -83,6 +83,7 @@ public class AddHouseholdFragment extends Fragment {
     private EditText occupation;
     private EditText address;
     private EditText wives;
+    private AutoCompleteTextView residence;
     private ProgressBar addLoading;
     private ImageView image;
     private ImageButton add_image;
@@ -144,6 +145,7 @@ public class AddHouseholdFragment extends Fragment {
         occupation = root.findViewById(R.id.h_occupation);
         wives = root.findViewById(R.id.h_wives);
         addLoading = root.findViewById(R.id.loading_household);
+        residence = root.findViewById(R.id.h_residence);
 
         add_image.setOnClickListener(v -> dispatchTakePictureIntent());
 
@@ -160,6 +162,10 @@ public class AddHouseholdFragment extends Fragment {
         ArrayAdapter maritalAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.MARITAL_STATUS);
         marital_status.setKeyListener(null);
         marital_status.setAdapter(maritalAdapter);
+
+        ArrayAdapter resideAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.RESIDENCE);
+        residence.setKeyListener(null);
+        residence.setAdapter(resideAdapter);
 
 
         return root;
@@ -207,6 +213,7 @@ public class AddHouseholdFragment extends Fragment {
         String mWives = extractString(wives);
         String mLgaOrigin = extractString(lga_origin);
         String mStateOrigin = extractString(state_origin);
+        String mResidence = extractString(residence);
 
         if (mFatherName.isEmpty()) {
             fatherName.setError("Field required");
@@ -252,6 +259,10 @@ public class AddHouseholdFragment extends Fragment {
             state_origin.setError("Field required");
             state_origin.requestFocus();
             enableBtn();
+        } else if (mResidence.isEmpty()) {
+            residence.setError("Field required");
+            residence.requestFocus();
+            enableBtn();
         } else  if (imageURL.isEmpty() || imageURL == null) {
             Toast.makeText(requireActivity(), "No image chosen", Toast.LENGTH_SHORT).show();
             enableBtn();
@@ -272,6 +283,7 @@ public class AddHouseholdFragment extends Fragment {
             household.setOccupation(mOccupation);
             household.setNumber_of_wives(mWives);
             household.setImage(imageURL);
+            household.setResidence(mResidence);
 
 
             db.collection(AppGlobals.HOUSEHOLD_CAPTURES)
@@ -313,18 +325,6 @@ public class AddHouseholdFragment extends Fragment {
                 crashlytics.recordException(t);
             }
         });
-    }
-
-    private void selectImage() {
-        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(camera, PICK_IMAGE_REQUEST);
-
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-//        startActivityForResult(intent.createChooser(intent,
-//                "Choose image"), PICK_IMAGE_REQUEST);
-
     }
 
     private void saveImage(Uri imageURI) {

@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -43,8 +46,12 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -60,6 +67,7 @@ import static com.app.plyss.utils.AppGlobals.PICK_IMAGE_REQUEST;
 
 public class AddFormFragment extends Fragment {
     private static final String TAG = "AddFormFragment";
+    private static final int REQUEST_TAKE_PHOTO = 105;
     private EditText fname;
     private EditText lname;
     private EditText phone;
@@ -81,6 +89,7 @@ public class AddFormFragment extends Fragment {
 
     private String imageURL;
     private String imageNamePath;
+    private String currentPhotoPath;
     private DatePickerDialog picker;
 
 
@@ -131,7 +140,6 @@ public class AddFormFragment extends Fragment {
         vin = root.findViewById(R.id.form_vin);
         occupation = root.findViewById(R.id.form_occupation);
         address = root.findViewById(R.id.form_address);
-//        dobLayout = root.findViewById(R.id.form_dob_layout);
         date_of_birth = root.findViewById(R.id.form_dob);
         marital_status = root.findViewById(R.id.form_marital_status);
         state_origin = root.findViewById(R.id.form_state_origin);
@@ -184,7 +192,7 @@ public class AddFormFragment extends Fragment {
         marital_status.setKeyListener(null);
         marital_status.setAdapter(maritalAdapter);
 
-        add_image.setOnClickListener(v -> selectImage());
+        add_image.setOnClickListener(v -> dispatchTakePictureIntent());
 
         return root;
     }
@@ -242,15 +250,6 @@ public class AddFormFragment extends Fragment {
                 crashlytics.recordException(t);
             }
         });
-    }
-
-    private void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        startActivityForResult(intent.createChooser(intent,
-                "Choose image"), PICK_IMAGE_REQUEST);
-
     }
 
     private void openHome() {
@@ -409,14 +408,55 @@ public class AddFormFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
+        if(requestCode == REQUEST_TAKE_PHOTO) {
 
-            Uri uri = data.getData();
-            image.setImageURI(uri);
-            saveImage(uri);
+            if (resultCode == RESULT_OK) {
+                File f = new File(currentPhotoPath);
+                image.setImageURI(Uri.fromFile(f));
+
+                saveImage(Uri.fromFile(f));
+            }
+
         }
     }
 
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Toasty.error(requireActivity(), "Camera errro", Toasty.LENGTH_LONG).show();
+                crashlytics.recordException(ex);
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(requireActivity(),
+                        "com.app.plyss.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
 
 }
