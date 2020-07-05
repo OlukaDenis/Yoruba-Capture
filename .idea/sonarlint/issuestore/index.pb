@@ -49,3 +49,8 @@ k
 ;app/src/main/java/com/dennytech/plyss/data/model/State.java,2/1/2123a5bee022dbfc55335f8f56fa298a4cb36e15
 m
 =app/src/main/java/com/dennytech/plyss/data/api/ApiClient.java,f/a/fa25fe02bb9f0e358b0d4ea18bd024285ead0837
+>
+app/.gitignore,5/1/51e1c5d383dfaa35e0e7e5873a0a99355a86880f
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

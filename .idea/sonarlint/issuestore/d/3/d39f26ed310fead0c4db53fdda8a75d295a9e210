@@ -1,7 +1,7 @@
 
+Y
+java:S2696ƒ"6Make the enclosing method "static" or remove this set.(ëÛğÜıÿÿÿÿ8úÀ„Ş­.
 G
-java:S1602Y",Remove useless curly braces around statement(ÕÊ¾øÿÿÿÿ
-R
-java:S2696€"6Make the enclosing method "static" or remove this set.(ëÛğÜıÿÿÿÿ
-V	java:S125}"<This block of commented-out lines of code should be removed.(– ‹ªøÿÿÿÿ
-W	java:S125"<This block of commented-out lines of code should be removed.(°îÓ´ùÿÿÿÿ
+java:S1602\",Remove useless curly braces around statement(ÕÊ¾øÿÿÿÿ
+L
+java:S1066{"/Merge this if statement with the enclosing one.(Á¢Ë8«®„Ş­.
