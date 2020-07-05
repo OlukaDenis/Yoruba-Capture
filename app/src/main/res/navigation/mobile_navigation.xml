@@ -10,12 +10,6 @@
         android:name="com.app.plyss.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_add_form"
-            app:destination="@id/navigation_add_form" />
-        <action
-            android:id="@+id/action_navigation_home_to_navigation_add_household"
-            app:destination="@id/navigation_add_household" />
     </fragment>
 
     <fragment
@@ -23,12 +17,6 @@
         android:name="com.app.plyss.ui.captured_data.CapturesFragment"
         android:label="@string/title_captures"
         tools:layout="@layout/fragment_captures" >
-        <action
-            android:id="@+id/action_navigation_data_to_navigation_individual_data"
-            app:destination="@id/navigation_individual_data" />
-        <action
-            android:id="@+id/action_navigation_data_to_navigation_household_data"
-            app:destination="@id/navigation_household_data" />
     </fragment>
 
     <fragment
@@ -36,11 +24,6 @@
         android:name="com.app.plyss.ui.add_form.AddFormFragment"
         android:label="@string/title_add_form"
         tools:layout="@layout/fragment_add_form" >
-        <action
-            android:id="@+id/action_navigation_add_form_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -48,11 +31,6 @@
         android:name="com.app.plyss.ui.captured_data.IndividualCapturesFragment"
         android:label="Individual Captures"
         tools:layout="@layout/fragment_individual_captures" >
-        <action
-            android:id="@+id/action_navigation_individual_data_to_navigation_data"
-            app:destination="@id/navigation_data"
-            app:popUpTo="@id/navigation_data"
-            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -60,11 +38,6 @@
         android:name="com.app.plyss.ui.captured_data.HouseholdCapturesFragment"
         android:label="Household Captures"
         tools:layout="@layout/fragment_household_captures" >
-        <action
-            android:id="@+id/action_navigation_household_data_to_navigation_data"
-            app:destination="@id/navigation_data"
-            app:popUpTo="@id/navigation_data"
-            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -72,10 +45,5 @@
         android:name="com.app.plyss.ui.add_form.AddHouseholdFragment"
         android:label="Add Household Data"
         tools:layout="@layout/fragment_add_household" >
-        <action
-            android:id="@+id/action_navigation_add_household_to_navigation_home"
-            app:destination="@id/navigation_home"
-            app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

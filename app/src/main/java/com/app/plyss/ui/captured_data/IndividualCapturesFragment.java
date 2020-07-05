@@ -3,6 +3,8 @@ package com.app.plyss.ui.captured_data;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +48,11 @@ public class IndividualCapturesFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
     private void populateCaptures() {
         Query filterQuery = db.collection(AppGlobals.INDIVIDUAL_CAPTURES)
                 .orderBy("date_of_capture", Query.Direction.ASCENDING);
@@ -58,6 +65,5 @@ public class IndividualCapturesFragment extends Fragment {
         adapter = new CaptureAdapter(captureOptions);
         recyclerView.setAdapter(adapter);
     }
-
 }
 
