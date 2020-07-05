@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.app.plyss.utils.AppGlobals.CAPTURES;
+import static com.app.plyss.utils.AppGlobals.INDIVIDUAL_CAPTURES;
 import static com.app.plyss.utils.AppGlobals.USERS;
 
 public class DataRepository {
@@ -65,7 +65,7 @@ public class DataRepository {
 
     public Task<Void> addDataCapture(Form form){
         String uid = UUID.randomUUID().toString();
-        DocumentReference docRef = db.collection(CAPTURES).document(uid);
+        DocumentReference docRef = db.collection(INDIVIDUAL_CAPTURES).document(uid);
         return docRef.set(form);
     }
 
@@ -78,7 +78,7 @@ public class DataRepository {
     public List<Form> getAllCaptures() {
         List<Form> captures = new ArrayList<>();
 
-        db.collection(CAPTURES)
+        db.collection(INDIVIDUAL_CAPTURES)
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -98,7 +98,7 @@ public class DataRepository {
 
     public int captureCount() {
         final int[] count = new int[1];
-        db.collection(CAPTURES).get().addOnCompleteListener(task -> {
+        db.collection(INDIVIDUAL_CAPTURES).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d("Captured Data: ", task.getResult().size() + "");
                 count[0] = task.getResult().size();

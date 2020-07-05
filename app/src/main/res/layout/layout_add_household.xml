@@ -5,25 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10">
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_weight="5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/eight_dp"
         android:layout_marginTop="18dp">
 
         <EditText
-            android:id="@+id/form_fname"
+            android:id="@+id/h_father_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/first_name"
+            android:hint="@string/father_s_name"
             android:inputType="textCapWords"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
@@ -31,70 +25,54 @@
 
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="0dp"
-        android:layout_weight="5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/eight_dp"
+        android:layout_marginEnd="@dimen/eight_dp"
         android:layout_marginTop="18dp">
 
         <EditText
-            android:id="@+id/form_lname"
+            android:id="@+id/h_mother_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/last_name"
+            android:hint="@string/mother_s_name"
             android:inputType="textCapWords"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/form_dob_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/eight_dp"
         android:layout_marginTop="18dp">
 
         <EditText
-            android:id="@+id/form_dob"
+            android:id="@+id/h_children_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="date"
-            android:hint="@string/date_of_birth"
+            android:hint="@string/no_of_children"
+            android:inputType="number"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:hint="@string/state_of_origin">
+        android:layout_marginEnd="@dimen/eight_dp"
+        android:layout_marginTop="18dp">
 
-        <AutoCompleteTextView
-            android:id="@+id/form_state_origin"
+        <EditText
+            android:id="@+id/h_dependant_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:editable="false"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:hint="@string/state_of_residence">
-
-        <AutoCompleteTextView
-            android:id="@+id/form_state_residence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
+            android:ems="10"
+            android:hint="@string/no_of_dependants"
+            android:inputType="number"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -107,7 +85,7 @@
         android:hint="@string/lga_of_origin">
 
         <AutoCompleteTextView
-            android:id="@+id/form_lga_origin"
+            android:id="@+id/h_lga_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
@@ -120,10 +98,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:hint="@string/lga_of_residence">
+        android:hint="@string/state_of_origin">
 
         <AutoCompleteTextView
-            android:id="@+id/form_lga_residence"
+            android:id="@+id/h_state_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
@@ -139,24 +117,7 @@
         android:layout_marginTop="18dp">
 
         <EditText
-            android:id="@+id/form_vin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/vin"
-            android:inputType="textCapWords"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp">
-
-        <EditText
-            android:id="@+id/form_address"
+            android:id="@+id/h_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -173,45 +134,11 @@
         android:layout_marginTop="18dp">
 
         <EditText
-            android:id="@+id/form_phone"
+            android:id="@+id/h_street"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/phone"
-            android:inputType="phone"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:hint="@string/gender">
-
-        <AutoCompleteTextView
-            android:id="@+id/form_gender"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:editable="false"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp">
-
-        <EditText
-            android:id="@+id/form_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/email"
+            android:hint="@string/street"
             android:inputType="textEmailAddress"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp" />
@@ -225,7 +152,7 @@
         android:layout_marginTop="18dp">
 
         <EditText
-            android:id="@+id/form_occupation"
+            android:id="@+id/h_occupation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -243,7 +170,7 @@
         android:layout_marginTop="18dp">
 
         <AutoCompleteTextView
-            android:id="@+id/form_marital_status"
+            android:id="@+id/h_marital_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -251,8 +178,25 @@
             android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp">
+
+        <EditText
+            android:id="@+id/h_wives"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/no_of_wives_if_married"
+            android:inputType="number"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/add_form_data_btn"
+        android:id="@+id/add_household_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -260,10 +204,11 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="70dp"
+        android:backgroundTint="@null"
+        android:padding="10dp"
         android:hapticFeedbackEnabled="true"
         android:background="@drawable/button_background"
         android:textSize="18sp"
-        android:padding="10dp"
         app:icon="@drawable/ic_check"
         app:iconGravity="textStart"
         android:textColor="@color/white"

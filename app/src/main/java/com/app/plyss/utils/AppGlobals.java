@@ -4,7 +4,8 @@ public class AppGlobals {
     public static String logged_in_user_email;
 
     public static final String USERS = "users";
-    public static final String CAPTURES = "data-captures";
+    public static final String INDIVIDUAL_CAPTURES = "individual-captures";
+    public static final String HOUSEHOLD_CAPTURES= "household-captures";
 
     public static final int ALL_PERMISSIONS = 33;
     public static final String user_email = "user_email";

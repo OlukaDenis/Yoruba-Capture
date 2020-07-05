@@ -16,15 +16,19 @@ import androidx.navigation.Navigation;
 
 import com.app.plyss.R;
 import com.app.plyss.utils.AppGlobals;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-import static com.app.plyss.utils.AppGlobals.CAPTURES;
+import static com.app.plyss.utils.AppGlobals.HOUSEHOLD_CAPTURES;
+import static com.app.plyss.utils.AppGlobals.INDIVIDUAL_CAPTURES;
 
 public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
@@ -32,11 +36,14 @@ public class HomeFragment extends Fragment {
     private NavController navController;
     private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseFirestore db;
+    private FirebaseCrashlytics crashlytics;
 
-    private Button open_form;
+    private MaterialButton open_form;
     @BindView(R.id.user_name)
     TextView userName;
-    TextView capturedData;
+
+    TextView individualData;
+    private TextView householdData;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,40 +53,68 @@ public class HomeFragment extends Fragment {
 
         ButterKnife.bind(this, root);
         db = FirebaseFirestore.getInstance();
+        crashlytics = FirebaseCrashlytics.getInstance();
         //Init firebase analytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
         mFirebaseAnalytics.setCurrentScreen(requireActivity(), this.getClass().getSimpleName(),
                 this.getClass().getSimpleName());
 
 
-        capturedData = root.findViewById(R.id.individual_data_number);
-
-        statistics();
-
-        open_form = root.findViewById(R.id.fab_add_data);
-        open_form.setOnClickListener(v -> openAddForm());
+        individualData = root.findViewById(R.id.individual_data_number);
+        householdData = root.findViewById(R.id.household_data_number);
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
         userName.setText(AppGlobals.logged_in_user_email);
+
+        statistics();
+        householdStats();
         return root;
     }
 
-    private void openAddForm() {
+    @OnClick(R.id.fab_add_data)
+    void openAddForm() {
         navController.navigate(R.id.navigation_add_form);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Add new data form");
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 
+
+    @OnClick(R.id.fab_household)
+    void openHouseholdForm() {
+        navController.navigate(R.id.navigation_add_household);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Add new household info");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+    }
+
     private void statistics() {
-        db.collection(CAPTURES).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                int count = Objects.requireNonNull(task.getResult()).size();
-                Log.d("Captured Data: ", String.valueOf(count));
-                capturedData.setText(String.valueOf(count));
-            } else {
-                Log.d(TAG, "Error getting captures: ", task.getException());
-            }
-        });
+        db.collection(INDIVIDUAL_CAPTURES).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        int count = Objects.requireNonNull(task.getResult()).size();
+                        Log.d("Captured Data: ", String.valueOf(count));
+                        individualData.setText(String.valueOf(count));
+                    } else {
+                        crashlytics.recordException(Objects.requireNonNull(task.getException()));
+                        Log.d(TAG, "Error getting captures: ", task.getException());
+                    }
+                })
+                .addOnFailureListener(e -> crashlytics.recordException(e));
+    }
+
+    private void householdStats() {
+        db.collection(HOUSEHOLD_CAPTURES).get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        int count = Objects.requireNonNull(task.getResult()).size();
+                        Log.d("Captured Data: ", String.valueOf(count));
+                        householdData.setText(String.valueOf(count));
+                    } else {
+                        crashlytics.recordException(Objects.requireNonNull(task.getException()));
+                        Log.d(TAG, "Error getting captures: ", task.getException());
+                    }
+                })
+                .addOnFailureListener(e -> crashlytics.recordException(e));
     }
 }

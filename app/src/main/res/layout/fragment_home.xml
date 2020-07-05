@@ -71,7 +71,7 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/font_eighteen"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text="Individual Data"/>
+                        android:text="@string/individual_data"/>
 
                     <TextView
                         android:id="@+id/individual_data_number"
