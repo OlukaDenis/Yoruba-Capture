@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_data"
-        android:name="com.app.plyss.ui.captures.CapturesFragment"
+        android:name="com.app.plyss.ui.captured_data.CapturesFragment"
         android:label="@string/title_captures"
         tools:layout="@layout/fragment_captures" />
 
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_individual_data"
-        android:name="com.app.plyss.ui.captures.IndividualCapturesFragment"
+        android:name="com.app.plyss.ui.captured_data.IndividualCapturesFragment"
         android:label="Individual Captures"
         tools:layout="@layout/fragment_individual_captures" >
         <action
@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/navigation_household_data"
-        android:name="com.app.plyss.ui.captures.HouseholdCapturesFragment"
+        android:name="com.app.plyss.ui.captured_data.HouseholdCapturesFragment"
         android:label="Household Captures"
         tools:layout="@layout/fragment_household_captures" >
         <action
