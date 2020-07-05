@@ -26,4 +26,22 @@
         android:name="com.app.plyss.ui.add_form.AddFormFragment"
         android:label="@string/title_add_form"
         tools:layout="@layout/fragment_add_form" />
+
+    <fragment
+        android:id="@+id/navigation_individual_data"
+        android:name="com.app.plyss.ui.captures.IndividualCapturesFragment"
+        android:label="Individual Captures"
+        tools:layout="@layout/fragment_individual_captures" />
+
+    <fragment
+        android:id="@+id/navigation_household_data"
+        android:name="com.app.plyss.ui.captures.HouseholdCapturesFragment"
+        android:label="Household Captures"
+        tools:layout="@layout/fragment_household_captures" />
+
+    <fragment
+        android:id="@+id/navigation_add_household"
+        android:name="com.app.plyss.ui.add_form.AddHouseholdFragment"
+        android:label="Add Household Data"
+        tools:layout="@layout/fragment_add_household" />
 </navigation>

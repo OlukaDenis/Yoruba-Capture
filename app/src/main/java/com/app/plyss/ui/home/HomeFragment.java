@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
                 this.getClass().getSimpleName());
 
 
-        capturedData = root.findViewById(R.id.captured_data_number);
+        capturedData = root.findViewById(R.id.individual_data_number);
 
         statistics();
 

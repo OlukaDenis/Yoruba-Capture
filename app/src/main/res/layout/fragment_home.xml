@@ -71,10 +71,37 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/font_eighteen"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/title_captures"/>
+                        android:text="Individual Data"/>
 
                     <TextView
-                        android:id="@+id/captured_data_number"
+                        android:id="@+id/individual_data_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="@dimen/font_thirty"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:text="@string/dash"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/font_eighteen"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="@string/household_data"/>
+
+                    <TextView
+                        android:id="@+id/household_data_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -96,23 +123,86 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/fab_add_data"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="64dp"
-        android:drawablePadding="10dp"
-        android:layout_marginEnd="48dp"
-        android:hapticFeedbackEnabled="true"
-        android:background="@drawable/button_background"
-        android:textSize="18sp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="80dp"
-        android:textColor="@color/white"
-        android:text="@string/capture_data" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_eighteen"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/collect_data"
+                android:layout_marginBottom="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fab_add_data"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:hapticFeedbackEnabled="true"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/white"
+                    android:text="@string/individual"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@null"
+                    app:icon="@drawable/ic_add"
+                    android:padding="10dp"
+                    app:iconGravity="textStart"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/fab_household"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:hapticFeedbackEnabled="true"
+                    android:background="@drawable/button_background"
+                    android:textColor="@color/white"
+                    android:text="@string/household"
+                    app:icon="@drawable/ic_add"
+                    android:backgroundTint="@null"
+                    android:padding="10dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:iconGravity="textStart"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
