@@ -3,15 +3,19 @@ package com.app.plyss.ui.add_form;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,8 +47,13 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +71,7 @@ import static com.app.plyss.utils.AppGlobals.PICK_IMAGE_REQUEST;
  */
 public class AddHouseholdFragment extends Fragment {
     private static final String TAG = "AddHouseholdFragment";
+    private static final int REQUEST_TAKE_PHOTO = 101;
     private EditText fatherName;
     private EditText motherName;
     private EditText childrenNumber;
@@ -89,6 +99,7 @@ public class AddHouseholdFragment extends Fragment {
     private NavController navController;
 
     private Household household;
+    private String currentPhotoPath;
 
     private List<String> stateOriginLgas = new ArrayList<>();
     private List<String> stateResidenceLgas = new ArrayList<>();
@@ -134,7 +145,7 @@ public class AddHouseholdFragment extends Fragment {
         wives = root.findViewById(R.id.h_wives);
         addLoading = root.findViewById(R.id.loading_household);
 
-        add_image.setOnClickListener(v -> selectImage());
+        add_image.setOnClickListener(v -> dispatchTakePictureIntent());
 
         ArrayAdapter stateAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
         state_origin.setAdapter(stateAdapter);
@@ -305,11 +316,14 @@ public class AddHouseholdFragment extends Fragment {
     }
 
     private void selectImage() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-        startActivityForResult(intent.createChooser(intent,
-                "Choose image"), PICK_IMAGE_REQUEST);
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(camera, PICK_IMAGE_REQUEST);
+
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("image/*");
+//        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+//        startActivityForResult(intent.createChooser(intent,
+//                "Choose image"), PICK_IMAGE_REQUEST);
 
     }
 
@@ -344,12 +358,54 @@ public class AddHouseholdFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null) {
+        if(requestCode == REQUEST_TAKE_PHOTO) {
 
-            Uri uri = data.getData();
-            image.setImageURI(uri);
-            saveImage(uri);
+            if (resultCode == RESULT_OK) {
+                File f = new File(currentPhotoPath);
+                image.setImageURI(Uri.fromFile(f));
+
+                saveImage(Uri.fromFile(f));
+
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(requireActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                Toasty.error(requireActivity(), "Camera errro", Toasty.LENGTH_LONG).show();
+                crashlytics.recordException(ex);
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(requireActivity(),
+                        "com.app.plyss.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
         }
     }
 
