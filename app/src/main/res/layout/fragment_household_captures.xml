@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/layout_capture"
         app:shimmer_demo_layout="@layout/layout_capture_shimmer"
-        app:shimmer_demo_layout_manager_type="grid"
         app:shimmer_demo_child_count="15"
         app:shimmer_demo_angle="20"
         app:shimmer_demo_grid_child_count="3"/>

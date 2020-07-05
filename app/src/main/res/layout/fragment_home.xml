@@ -4,51 +4,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/profile_layout"
+    <LinearLayout
+        android:id="@+id/profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/sixteen_dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="@dimen/one_hundred_dp"
+            android:layout_height="@dimen/one_hundred_dp"
+            android:layout_gravity="center"
+            android:src="@drawable/user" />
+
+        <TextView
+            android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/sixteen_dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:padding="@dimen/eight_dp"
+            android:text="@string/user_name"
+            android:textSize="@dimen/font_eighteen"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="@dimen/one_hundred_dp"
-                android:layout_height="@dimen/one_hundred_dp"
-                android:layout_gravity="center"
-                android:src="@drawable/user"/>
-
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/font_eighteen"
-                android:textStyle="bold"
-                android:padding="@dimen/eight_dp"
-                android:gravity="center"
-                android:text="@string/user_name"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorPrimary"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/stats_layout"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/sixteen_dp"
-            app:layout_constraintTop_toBottomOf="@id/profile_layout"
-            android:orientation="vertical">
+            android:layout_height="0.5dp"
+            android:background="@color/colorPrimary" />
 
-            <androidx.cardview.widget.CardView
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/stats_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/profile_layout">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="@dimen/sixteen_dp"
-            app:cardCornerRadius="6dp">
+            android:layout_height="150dp"
+            android:layout_margin="@dimen/sixteen_dp"
+            app:cardCornerRadius="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,65 +60,77 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/font_eighteen"
+                        android:text="@string/individual_data"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/individual_data"/>
+                        android:textSize="@dimen/font_eighteen"
+                        android:layout_marginBottom="6dp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginEnd="@dimen/sixteen_dp"
+                        android:layout_marginStart="@dimen/sixteen_dp"
+                        android:background="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/individual_data_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/font_thirty"
+                        android:text="@string/dash"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"
-                        android:text="@string/dash"/>
+                        android:textSize="@dimen/font_thirty"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="5"
-                    android:orientation="vertical"
-                    android:layout_height="wrap_content">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/font_eighteen"
+                        android:text="@string/household_data"
                         android:textColor="@color/colorPrimaryDark"
-                        android:text="@string/household_data"/>
+                        android:textSize="@dimen/font_eighteen"
+                        android:layout_marginBottom="6dp"
+                        android:textStyle="bold" />
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginEnd="@dimen/sixteen_dp"
+                        android:layout_marginStart="@dimen/sixteen_dp"
+                        android:background="@color/colorPrimary" />
 
                     <TextView
                         android:id="@+id/household_data_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:textSize="@dimen/font_thirty"
+                        android:text="@string/dash"
                         android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"
-                        android:text="@string/dash"/>
+                        android:textSize="@dimen/font_thirty"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/colorPrimary"/>
 
 
     </LinearLayout>
@@ -126,79 +138,79 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="80dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="30dp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/stats_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="@dimen/font_eighteen"
-                android:textColor="@color/colorPrimaryDark"
                 android:text="@string/collect_data"
-                android:layout_marginBottom="8dp"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/font_eighteen"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/colorPrimary"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="8dp"
+                android:background="@color/colorPrimary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="10"
                 android:layout_marginTop="20dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="10">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fab_add_data"
                     android:layout_width="0dp"
-                    android:layout_weight="5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:hapticFeedbackEnabled="true"
-                    android:background="@drawable/button_background"
-                    android:textColor="@color/white"
-                    android:text="@string/individual"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="5"
+                    android:background="@drawable/button_background"
                     android:backgroundTint="@null"
-                    app:icon="@drawable/ic_add"
+                    android:hapticFeedbackEnabled="true"
                     android:padding="10dp"
-                    app:iconGravity="textStart"/>
+                    android:text="@string/individual"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_add"
+                    app:iconGravity="textStart" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/fab_household"
                     android:layout_width="0dp"
-                    android:layout_weight="5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
-                    android:hapticFeedbackEnabled="true"
-                    android:background="@drawable/button_background"
-                    android:textColor="@color/white"
-                    android:text="@string/household"
-                    app:icon="@drawable/ic_add"
-                    android:backgroundTint="@null"
-                    android:padding="10dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    app:iconGravity="textStart"/>
+                    android:layout_weight="5"
+                    android:background="@drawable/button_background"
+                    android:backgroundTint="@null"
+                    android:hapticFeedbackEnabled="true"
+                    android:padding="10dp"
+                    android:text="@string/household"
+                    android:textColor="@color/white"
+                    app:icon="@drawable/ic_add"
+                    app:iconGravity="textStart" />
 
             </LinearLayout>
         </LinearLayout>

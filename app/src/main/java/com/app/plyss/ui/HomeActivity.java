@@ -34,7 +34,9 @@ public class HomeActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_data)
+                R.id.navigation_home, R.id.navigation_data, R.id.navigation_add_form,
+                R.id.navigation_add_household, R.id.navigation_household_data,
+                R.id.navigation_individual_data)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
