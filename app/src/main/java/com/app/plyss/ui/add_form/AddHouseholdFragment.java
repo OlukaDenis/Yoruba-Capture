@@ -101,7 +101,7 @@ public class AddHouseholdFragment extends Fragment {
 
     private Household household;
     private String currentPhotoPath;
-
+    private String stateSelected = "";
     private List<String> stateOriginLgas = new ArrayList<>();
     private List<String> stateResidenceLgas = new ArrayList<>();
 
@@ -149,15 +149,13 @@ public class AddHouseholdFragment extends Fragment {
 
         add_image.setOnClickListener(v -> dispatchTakePictureIntent());
 
-        ArrayAdapter stateAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
+        ArrayAdapter stateAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getStates());
         state_origin.setAdapter(stateAdapter);
         state_origin.setKeyListener(null);
         state_origin.setOnItemClickListener((parent, view, position, id) -> {
             Object obj = parent.getItemAtPosition(position);
             getOriginStateLgas(obj.toString());
         });
-
-        lga_origin.setOnClickListener(v -> getOriginStateLgas(state_origin.getText().toString()));
 
         ArrayAdapter maritalAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.MARITAL_STATUS);
         marital_status.setKeyListener(null);
@@ -301,30 +299,9 @@ public class AddHouseholdFragment extends Fragment {
     }
 
     private void getOriginStateLgas(String state) {
-        Log.d(TAG, "getStateLgas called .....: ");
-        //Fetching states
-        ApiService service = ApiClient.getApiService(ApiService.class);
-        Call<List<String>> call = service.getStateLgas(state);
-
-        call.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<String>> call, @NotNull Response<List<String>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<String> lgas = response.body();
-                        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, lgas);
-                        lga_origin.setKeyListener(null);
-                        lga_origin.setAdapter(lgaOriginAdapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<List<String>> call, @NotNull Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                crashlytics.recordException(t);
-            }
-        });
+        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getLGAS(state));
+        lga_origin.setKeyListener(null);
+        lga_origin.setAdapter(lgaOriginAdapter);
     }
 
     private void saveImage(Uri imageURI) {

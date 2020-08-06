@@ -165,7 +165,7 @@ public class AddFormFragment extends Fragment {
             picker.show();
         });
 
-        ArrayAdapter originAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
+        ArrayAdapter originAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getStates());
         state_origin.setAdapter(originAdapter);
         state_origin.setKeyListener(null);
         state_origin.setOnItemClickListener((parent, view, position, id) -> {
@@ -173,16 +173,13 @@ public class AddFormFragment extends Fragment {
             getOriginStateLgas(obj.toString());
         });
 
-        ArrayAdapter residenceAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
+        ArrayAdapter residenceAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getStates());
         state_residence.setKeyListener(null);
         state_residence.setAdapter(residenceAdapter);
         state_residence.setOnItemClickListener((parent, view, position, id) -> {
             Object obj = parent.getItemAtPosition(position);
             getResidenceStateLgas(obj.toString());
         });
-
-        lga_origin.setOnClickListener(v -> getOriginStateLgas(state_origin.getText().toString()));
-        lga_residence.setOnClickListener(v -> getResidenceStateLgas(state_residence.getText().toString()));
 
         ArrayAdapter genderAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.GENDER);
         gender.setKeyListener(null);
@@ -198,58 +195,15 @@ public class AddFormFragment extends Fragment {
     }
 
     private void getOriginStateLgas(String state) {
-        Log.d(TAG, "getStateLgas called .....: ");
-        //Fetching states
-        ApiService service = ApiClient.getApiService(ApiService.class);
-        Call<List<String>> call = service.getStateLgas(state);
-
-        call.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<String>> call, @NotNull Response<List<String>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<String> lgas = response.body();
-                        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, lgas);
-                        lga_origin.setKeyListener(null);
-                        lga_origin.setAdapter(lgaOriginAdapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<List<String>> call, @NotNull Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                crashlytics.recordException(t);
-            }
-        });
+        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getLGAS(state));
+        lga_origin.setKeyListener(null);
+        lga_origin.setAdapter(lgaOriginAdapter);
     }
 
     private void getResidenceStateLgas(String state) {
-        Log.d(TAG, "getStateLgas called .....: ");
-        //Fetching states
-        ApiService service = ApiClient.getApiService(ApiService.class);
-        Call<List<String>> call = service.getStateLgas(state);
-
-        call.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<String>> call, @NotNull Response<List<String>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<String> lgas = response.body();
-
-                        ArrayAdapter lgaResAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, lgas);
-                        lga_residence.setKeyListener(null);
-                        lga_residence.setAdapter(lgaResAdapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<List<String>> call, @NotNull Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                crashlytics.recordException(t);
-            }
-        });
+        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getLGAS(state));
+        lga_residence.setKeyListener(null);
+        lga_residence.setAdapter(lgaOriginAdapter);
     }
 
     private void openHome() {
