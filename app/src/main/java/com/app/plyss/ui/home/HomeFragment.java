@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +43,9 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.user_name)
     TextView userName;
 
+    @BindView(R.id.btnLoading)
+    ProgressBar btnLoading;
+
     TextView individualData;
     private TextView householdData;
 
@@ -73,6 +77,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.fab_add_data)
     void openAddForm() {
+        btnLoading.setVisibility(View.VISIBLE);
         navController.navigate(R.id.navigation_add_form);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Add new data form");
@@ -82,6 +87,7 @@ public class HomeFragment extends Fragment {
 
     @OnClick(R.id.fab_household)
     void openHouseholdForm() {
+        btnLoading.setVisibility(View.VISIBLE);
         navController.navigate(R.id.navigation_add_household);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Add new household info");
@@ -112,9 +118,12 @@ public class HomeFragment extends Fragment {
                         householdData.setText(String.valueOf(count));
                     } else {
                         crashlytics.recordException(Objects.requireNonNull(task.getException()));
-                        Log.d(TAG, "Error getting captures: ", task.getException());
+                        Log.e(TAG, "Error getting captures: ", task.getException());
                     }
                 })
-                .addOnFailureListener(e -> crashlytics.recordException(e));
+                .addOnFailureListener(e -> {
+                    crashlytics.recordException(e);
+                    Log.e(TAG, "householdStats: ",e );
+                });
     }
 }

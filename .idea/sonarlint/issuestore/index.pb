@@ -28,3 +28,7 @@ o
 ?app/src/main/java/com/app/plyss/data/local/LocalDataSource.java,b/d/bdc68346c5a8e02c43cd3acf51ac669496a4de11
 h
 8app/src/main/java/com/app/plyss/data/api/ApiService.java,b/4/b4b7f0771069c34b719c84e29eb98a6f24a137b4
+X
+(gradle/wrapper/gradle-wrapper.properties,f/b/fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+A
+gradle.properties,2/a/2afbb999f001938c88fa43fc2ef52abf0f8213e4

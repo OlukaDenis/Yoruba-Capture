@@ -58,12 +58,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import es.dmoral.toasty.Toasty;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static com.app.plyss.utils.AppGlobals.PICK_IMAGE_REQUEST;
 
 public class AddFormFragment extends Fragment {
     private static final String TAG = "AddFormFragment";
@@ -87,7 +83,7 @@ public class AddFormFragment extends Fragment {
     private ImageView image;
     private ImageButton add_image;
 
-    private String imageURL;
+    private String imageURL = "";
     private String imageNamePath;
     private String currentPhotoPath;
     private DatePickerDialog picker;
@@ -107,8 +103,7 @@ public class AddFormFragment extends Fragment {
 
     private Form form;
 
-    private List<String> stateOriginLgas = new ArrayList<>();
-    private List<String> stateResidenceLgas = new ArrayList<>();
+    private ProgressDialog progressDialog;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -234,83 +229,87 @@ public class AddFormFragment extends Fragment {
         String m_lga_origin = extractString(lga_origin);
         String m_lga_residence = extractString(lga_residence);
 
-        if (m_fname.isEmpty()) {
-            fname.setError("Field required");
-            fname.requestFocus();
-        } else if (m_lname.isEmpty()) {
-            lname.setError("Field required");
-            lname.requestFocus();
-        } else if (m_dob.isEmpty()) {
-            date_of_birth.setError("Field required");
-            date_of_birth.requestFocus();
-        }  else if (m_state_origin.isEmpty()) {
-            state_origin.setError("Field required");
-            state_origin.requestFocus();
-        } else if (m_state_reside.isEmpty()) {
-            state_residence.setError("Field required");
-            state_residence.requestFocus();
-        } else if (m_lga_origin.isEmpty()) {
-            lga_origin.setError("Field required");
-            lga_origin.requestFocus();
-        } else if (m_lga_residence.isEmpty()) {
-            lga_residence.setError("Field required");
-            lga_residence.requestFocus();
-        } else if (m_vin.isEmpty()) {
-            vin.setError("Field required");
-            vin.requestFocus();
-        } else if (m_address.isEmpty()) {
-            address.setError("Field required");
-            address.requestFocus();
-        } else if (m_phone.isEmpty()) {
-            phone.setError("Field required");
-            phone.requestFocus();
-        } else if (m_gender.isEmpty()) {
-            gender.setError("Field required");
-            gender.requestFocus();
-        } else if (m_email.isEmpty()) {
-            email.setError("Field required");
-            email.requestFocus();
-        } else if (m_occupation.isEmpty()) {
-            occupation.setError("Field required");
-            occupation.requestFocus();
-        } else if (m_marital.isEmpty()) {
-            marital_status.setError("Field required");
-            marital_status.requestFocus();
-        } else  if (imageURL.isEmpty() || imageURL == null){
+        if (imageURL.equals("")){
             Toast.makeText(requireActivity(), "No image chosen", Toast.LENGTH_SHORT).show();
         } else {
-            disableBtn();
 
-            form.setFirst_name(m_fname);
-            form.setLast_name(m_lname);
-            form.setAddress(m_address);
-            form.setEmail(m_email);
-            form.setAgentId(AppGlobals.logged_in_user_email);
-            form.setDate_of_birth(m_dob);
-            form.setGender(m_gender);
-            form.setMarital_status(m_marital);
-            form.setPhone(m_phone);
-            form.setVoters_reg_number(m_vin);
-            form.setState_of_origin(m_state_origin);
-            form.setState_of_residence(m_state_reside);
-            form.setLga_of_origin(m_lga_origin);
-            form.setLga_of_residence(m_lga_residence);
-            form.setOccupation(m_occupation);
-            form.setDate_of_capture(AppUtils.currentDate());
-            form.setTime_of_capture(AppUtils.currentTime());
-            form.setImage(imageURL);
+            if (m_fname.isEmpty()) {
+                fname.setError("Field required");
+                fname.requestFocus();
+            } else if (m_lname.isEmpty()) {
+                lname.setError("Field required");
+                lname.requestFocus();
+            } else if (m_dob.isEmpty()) {
+                date_of_birth.setError("Field required");
+                date_of_birth.requestFocus();
+            }  else if (m_state_origin.isEmpty()) {
+                state_origin.setError("Field required");
+                state_origin.requestFocus();
+            } else if (m_state_reside.isEmpty()) {
+                state_residence.setError("Field required");
+                state_residence.requestFocus();
+            } else if (m_lga_origin.isEmpty()) {
+                lga_origin.setError("Field required");
+                lga_origin.requestFocus();
+            } else if (m_lga_residence.isEmpty()) {
+                lga_residence.setError("Field required");
+                lga_residence.requestFocus();
+            } else if (m_vin.isEmpty()) {
+                vin.setError("Field required");
+                vin.requestFocus();
+            } else if (m_address.isEmpty()) {
+                address.setError("Field required");
+                address.requestFocus();
+            } else if (m_phone.isEmpty()) {
+                phone.setError("Field required");
+                phone.requestFocus();
+            } else if (m_gender.isEmpty()) {
+                gender.setError("Field required");
+                gender.requestFocus();
+            } else if (m_email.isEmpty()) {
+                email.setError("Field required");
+                email.requestFocus();
+            } else if (m_occupation.isEmpty()) {
+                occupation.setError("Field required");
+                occupation.requestFocus();
+            } else if (m_marital.isEmpty()) {
+                marital_status.setError("Field required");
+                marital_status.requestFocus();
+            }  else {
+                disableBtn();
 
-            db.collection(AppGlobals.INDIVIDUAL_CAPTURES)
-                    .add(form)
-                    .addOnSuccessListener(documentReference -> {
-                        openHome();
-                        Toasty.success(requireActivity(), "Data saved", Toasty.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toasty.error(requireActivity(), "Data not saved", Toasty.LENGTH_SHORT).show();
-                        crashlytics.recordException(e);
-                        enableBtn();
-                    });
+                form.setFirst_name(m_fname);
+                form.setLast_name(m_lname);
+                form.setAddress(m_address);
+                form.setEmail(m_email);
+                form.setAgentId(AppGlobals.logged_in_user_email);
+                form.setDate_of_birth(m_dob);
+                form.setGender(m_gender);
+                form.setMarital_status(m_marital);
+                form.setPhone(m_phone);
+                form.setVoters_reg_number(m_vin);
+                form.setState_of_origin(m_state_origin);
+                form.setState_of_residence(m_state_reside);
+                form.setLga_of_origin(m_lga_origin);
+                form.setLga_of_residence(m_lga_residence);
+                form.setOccupation(m_occupation);
+                form.setDate_of_capture(AppUtils.currentDate());
+                form.setTime_of_capture(AppUtils.currentTime());
+                form.setImage(imageURL);
+
+                db.collection(AppGlobals.INDIVIDUAL_CAPTURES)
+                        .add(form)
+                        .addOnSuccessListener(documentReference -> {
+                            openHome();
+                            Toasty.success(requireActivity(), "Data saved", Toasty.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toasty.error(requireActivity(), "Data not saved", Toasty.LENGTH_SHORT).show();
+                            crashlytics.recordException(e);
+                            crashlytics.log("Error while saving data");
+                            enableBtn();
+                        });
+            }
         }
     }
 
@@ -332,8 +331,9 @@ public class AddFormFragment extends Fragment {
 
 
     private void saveImage(Uri imageURI) {
-        final ProgressDialog progressDialog = new ProgressDialog(requireActivity());
+        progressDialog = new ProgressDialog(requireActivity());
         progressDialog.setMessage("Uploading....");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         final StorageReference ref = storageReference.child(imageURI.getLastPathSegment() + AppUtils.currentDate());
@@ -354,7 +354,7 @@ public class AddFormFragment extends Fragment {
                     .addOnProgressListener(taskSnapshot -> {
                         double progress = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                         progressDialog.setMessage("Uploading " + progress + "%");
-
+                        progressDialog.setCancelable(false);
                     });
     }
 
@@ -399,7 +399,7 @@ public class AddFormFragment extends Fragment {
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                Toasty.error(requireActivity(), "Camera errro", Toasty.LENGTH_LONG).show();
+                Toasty.error(requireActivity(), "Camera error", Toasty.LENGTH_LONG).show();
                 crashlytics.recordException(ex);
             }
             // Continue only if the File was successfully created

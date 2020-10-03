@@ -24,6 +24,7 @@ public class LocalDataSource {
         states.add("Edo");
         states.add("Ekiti");
         states.add("Kogi");
+        states.add("Plateau");
         states.add("Kwara");
         states.add("Lagos");
         states.add("Ogun");
@@ -44,9 +45,11 @@ public class LocalDataSource {
                 lgas.add("Warri South");
                 lgas.add("Warri South West");
                 break;
+
             case "Edo":
                 lgas.add("Akoko-Edo");
                 break;
+
             case "Ekiti":
                 lgas.add("Ado");
                 lgas.add("Efon");
@@ -65,6 +68,7 @@ public class LocalDataSource {
                 lgas.add("Moba");
                 lgas.add("Oye");
                 break;
+
             case "Kogi":
                 lgas.add("Ijumu");
                 lgas.add("Kabba/Bunu");
@@ -73,6 +77,7 @@ public class LocalDataSource {
                 lgas.add("Yagba-East");
                 lgas.add("Yagba-West");
                 break;
+
             case "Kwara":
                 lgas.add("Asa");
                 lgas.add("Ekiti");
@@ -219,6 +224,26 @@ public class LocalDataSource {
                 lgas.add("Saki East");
                 lgas.add("Saki West");
                 lgas.add("Surulere");
+                break;
+
+            case "Plateau":
+                lgas.add("Barkin Ladi");
+                lgas.add("Bassa");
+                lgas.add("Bokkos");
+                lgas.add("Jos East");
+                lgas.add("Jos North");
+                lgas.add("Jos South");
+                lgas.add("Kanam");
+                lgas.add("Kanke");
+                lgas.add("Langtang North");
+                lgas.add("Langtang South");
+                lgas.add("Mangu");
+                lgas.add("Mikang");
+                lgas.add("Pankshin");
+                lgas.add("Qua'an Pan");
+                lgas.add("Riyom");
+                lgas.add("Shendam");
+                lgas.add("Wase");
                 break;
 
             default:
