@@ -88,7 +88,7 @@ public class AddHouseholdFragment extends Fragment {
     private ImageView image;
     private ImageButton add_image;
 
-    private String imageURL;
+    private String imageURL = "";
     private String imageNamePath;
 
     private AddFragmentViewModel addFragmentViewModel;
@@ -101,9 +101,7 @@ public class AddHouseholdFragment extends Fragment {
 
     private Household household;
     private String currentPhotoPath;
-
-    private List<String> stateOriginLgas = new ArrayList<>();
-    private List<String> stateResidenceLgas = new ArrayList<>();
+    private ProgressDialog progressDialog;
 
     @BindView(R.id.add_household_btn)
     MaterialButton addHouseholdBtn;
@@ -149,15 +147,13 @@ public class AddHouseholdFragment extends Fragment {
 
         add_image.setOnClickListener(v -> dispatchTakePictureIntent());
 
-        ArrayAdapter stateAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.ALL_STATES);
+        ArrayAdapter stateAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getStates());
         state_origin.setAdapter(stateAdapter);
         state_origin.setKeyListener(null);
         state_origin.setOnItemClickListener((parent, view, position, id) -> {
             Object obj = parent.getItemAtPosition(position);
             getOriginStateLgas(obj.toString());
         });
-
-        lga_origin.setOnClickListener(v -> getOriginStateLgas(state_origin.getText().toString()));
 
         ArrayAdapter maritalAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.MARITAL_STATUS);
         marital_status.setKeyListener(null);
@@ -197,7 +193,6 @@ public class AddHouseholdFragment extends Fragment {
 
     @OnClick(R.id.add_household_btn)
     void saveHousehold() {
-        disableBtn();
         User user = addFragmentViewModel.getUser(AppGlobals.logged_in_user_email);
         String uuid = user.getUuid();
 
@@ -215,121 +210,91 @@ public class AddHouseholdFragment extends Fragment {
         String mStateOrigin = extractString(state_origin);
         String mResidence = extractString(residence);
 
-        if (mFatherName.isEmpty()) {
-            fatherName.setError("Field required");
-            fatherName.requestFocus();
-            enableBtn();
-        } else if (mMotherName.isEmpty()) {
-            motherName.setError("Field required");
-            motherName.requestFocus();
-            enableBtn();
-        } else if (mAddress.isEmpty()) {
-            address.setError("Field required");
-            address.requestFocus();
-            enableBtn();
-        } else if (mStreet.isEmpty()) {
-            street.setError("Field required");
-            street.requestFocus();
-            enableBtn();
-        } else if (mChildren.isEmpty()) {
-            childrenNumber.setError("Field required");
-            childrenNumber.requestFocus();
-            enableBtn();
-        } else if (mDependants.isEmpty()) {
-            dependantsNumber.setError("Field required");
-            dependantsNumber.requestFocus();
-            enableBtn();
-        } else if (mOccupation.isEmpty()) {
-            occupation.setError("Field required");
-            occupation.requestFocus();
-            enableBtn();
-        } else if (mMaritalStatus.isEmpty()) {
-            marital_status.setError("Field required");
-            marital_status.requestFocus();
-            enableBtn();
-        } else if (mWives.isEmpty()) {
-            wives.setError("Field required");
-            wives.requestFocus();
-            enableBtn();
-        } else if (mLgaOrigin.isEmpty()) {
-            lga_origin.setError("Field required");
-            lga_origin.requestFocus();
-            enableBtn();
-        } else if (mStateOrigin.isEmpty()) {
-            state_origin.setError("Field required");
-            state_origin.requestFocus();
-            enableBtn();
-        } else if (mResidence.isEmpty()) {
-            residence.setError("Field required");
-            residence.requestFocus();
-            enableBtn();
-        } else  if (imageURL.isEmpty() || imageURL == null) {
+        if (imageURL.equals("")){
             Toast.makeText(requireActivity(), "No image chosen", Toast.LENGTH_SHORT).show();
-            enableBtn();
         } else {
+            if (mFatherName.isEmpty()) {
+                fatherName.setError("Field required");
+                fatherName.requestFocus();
+            } else if (mMotherName.isEmpty()) {
+                motherName.setError("Field required");
+                motherName.requestFocus();
+            } else if (mAddress.isEmpty()) {
+                address.setError("Field required");
+                address.requestFocus();
+            } else if (mStreet.isEmpty()) {
+                street.setError("Field required");
+                street.requestFocus();
+            } else if (mChildren.isEmpty()) {
+                childrenNumber.setError("Field required");
+                childrenNumber.requestFocus();
+            } else if (mDependants.isEmpty()) {
+                dependantsNumber.setError("Field required");
+                dependantsNumber.requestFocus();
+            } else if (mOccupation.isEmpty()) {
+                occupation.setError("Field required");
+                occupation.requestFocus();
+            } else if (mMaritalStatus.isEmpty()) {
+                marital_status.setError("Field required");
+                marital_status.requestFocus();
+            } else if (mWives.isEmpty()) {
+                wives.setError("Field required");
+                wives.requestFocus();
+            } else if (mLgaOrigin.isEmpty()) {
+                lga_origin.setError("Field required");
+                lga_origin.requestFocus();
+            } else if (mStateOrigin.isEmpty()) {
+                state_origin.setError("Field required");
+                state_origin.requestFocus();
+            } else if (mResidence.isEmpty()) {
+                residence.setError("Field required");
+                residence.requestFocus();
+            } else {
+                disableBtn();
 
-            household.setAgentId(AppGlobals.logged_in_user_email);
-            household.setAddress(mAddress);
-            household.setChildren_number(Integer.parseInt(mChildren));
-            household.setDependants_number(Integer.parseInt(mDependants));
-            household.setDate_of_capture(AppUtils.currentDate());
-            household.setTime_of_capture(AppUtils.currentTime());
-            household.setFather_name(mFatherName);
-            household.setMother_name(mMotherName);
-            household.setMarital_status(mMaritalStatus);
-            household.setState_of_origin(mStateOrigin);
-            household.setLga_of_origin(mLgaOrigin);
-            household.setStreet(mStreet);
-            household.setOccupation(mOccupation);
-            household.setNumber_of_wives(mWives);
-            household.setImage(imageURL);
-            household.setResidence(mResidence);
+                household.setAgentId(AppGlobals.logged_in_user_email);
+                household.setAddress(mAddress);
+                household.setChildren_number(Integer.parseInt(mChildren));
+                household.setDependants_number(Integer.parseInt(mDependants));
+                household.setDate_of_capture(AppUtils.currentDate());
+                household.setTime_of_capture(AppUtils.currentTime());
+                household.setFather_name(mFatherName);
+                household.setMother_name(mMotherName);
+                household.setMarital_status(mMaritalStatus);
+                household.setState_of_origin(mStateOrigin);
+                household.setLga_of_origin(mLgaOrigin);
+                household.setStreet(mStreet);
+                household.setOccupation(mOccupation);
+                household.setNumber_of_wives(mWives);
+                household.setImage(imageURL);
+                household.setResidence(mResidence);
 
 
-            db.collection(AppGlobals.HOUSEHOLD_CAPTURES)
-                    .add(household)
-                    .addOnSuccessListener(documentReference -> {
-                        openHome();
-                        Toasty.success(requireActivity(), "Data saved", Toasty.LENGTH_SHORT).show();
-                    })
-                    .addOnFailureListener(e -> {
-                        Toasty.error(requireActivity(), "Data not saved", Toasty.LENGTH_SHORT).show();
-                        crashlytics.recordException(e);
-                        enableBtn();
-                    });
+                db.collection(AppGlobals.HOUSEHOLD_CAPTURES)
+                        .add(household)
+                        .addOnSuccessListener(documentReference -> {
+                            openHome();
+                            Toasty.success(requireActivity(), "Data saved", Toasty.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toasty.error(requireActivity(), "Data not saved", Toasty.LENGTH_SHORT).show();
+                            crashlytics.recordException(e);
+                            enableBtn();
+                        });
+            }
         }
     }
 
     private void getOriginStateLgas(String state) {
-        Log.d(TAG, "getStateLgas called .....: ");
-        //Fetching states
-        ApiService service = ApiClient.getApiService(ApiService.class);
-        Call<List<String>> call = service.getStateLgas(state);
-
-        call.enqueue(new Callback<List<String>>() {
-            @Override
-            public void onResponse(@NotNull Call<List<String>> call, @NotNull Response<List<String>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<String> lgas = response.body();
-                        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, lgas);
-                        lga_origin.setKeyListener(null);
-                        lga_origin.setAdapter(lgaOriginAdapter);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NotNull Call<List<String>> call, @NotNull Throwable t) {
-                Log.e(TAG, "onFailure: ", t);
-                crashlytics.recordException(t);
-            }
-        });
+        ArrayAdapter lgaOriginAdapter = new ArrayAdapter<>(requireActivity(), R.layout.dropdown_pop_up_item, LocalDataSource.getLGAS(state));
+        lga_origin.setKeyListener(null);
+        lga_origin.setAdapter(lgaOriginAdapter);
     }
 
     private void saveImage(Uri imageURI) {
-        final ProgressDialog progressDialog = new ProgressDialog(requireActivity());
+        progressDialog = new ProgressDialog(requireActivity());
         progressDialog.setMessage("Uploading....");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
         final StorageReference ref = storageReference.child(imageURI.getLastPathSegment() + AppUtils.currentDate());
@@ -350,6 +315,7 @@ public class AddHouseholdFragment extends Fragment {
                 .addOnProgressListener(taskSnapshot -> {
                     double progress = (100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                     progressDialog.setMessage("Uploading " + progress + "%");
+                    progressDialog.setCancelable(false);
 
                 });
     }

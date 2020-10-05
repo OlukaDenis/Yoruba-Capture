@@ -132,7 +132,6 @@
 
         </androidx.cardview.widget.CardView>
 
-
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -152,7 +151,6 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:orientation="vertical">
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -213,8 +211,27 @@
                     app:iconGravity="textStart" />
 
             </LinearLayout>
+
         </LinearLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ProgressBar
+                    android:id="@+id/btnLoading"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"/>
+
+            </RelativeLayout>
+
+        </FrameLayout>
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
