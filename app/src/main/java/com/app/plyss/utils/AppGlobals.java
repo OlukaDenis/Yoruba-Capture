@@ -17,4 +17,5 @@ public class AppGlobals {
     public static final int CAMERA_REQUEST = 101;
 
     public static final String NIGERIAN_STATES_URL = "https://locationsng-api.herokuapp.com/api/v1/";
+
 }

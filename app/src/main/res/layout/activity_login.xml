@@ -54,6 +54,17 @@
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forgot Password?"
+            android:layout_marginTop="16dp"
+            android:gravity="end"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
+
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
@@ -67,6 +78,16 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:text="@string/login" />
+
+        <TextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create account"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

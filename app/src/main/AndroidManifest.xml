@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.app.plyss">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -15,12 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.forgot_password.ForgotPasswordActivity"></activity>
         <activity
-            android:name="com.app.plyss.ui.HomeActivity"
-            android:label="@string/title_activity_home">
-
-        </activity>
+            android:name=".ui.HomeActivity"
+            android:label="@string/title_activity_home"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -29,11 +27,11 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
-            android:name="com.app.plyss.ui.SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/WithNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,16 +40,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.app.plyss.ui.signup.SignupActivity"
-            android:theme="@style/WithNoActionBar">
-
-        </activity>
+            android:name=".ui.signup.SignupActivity"
+            android:theme="@style/WithNoActionBar"></activity>
         <activity
-            android:name="com.app.plyss.ui.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/WithNoActionBar">
-
-        </activity>
+            android:theme="@style/WithNoActionBar"></activity>
     </application>
 
 </manifest>

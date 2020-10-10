@@ -55,6 +55,11 @@ public class SignupActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this, factory).get(SignupViewModel.class);
     }
 
+    @OnClick(R.id.tvLogin)
+    void goToLogin() {
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+    }
+
     @OnClick(R.id.signup)
     void saveUser() {
 

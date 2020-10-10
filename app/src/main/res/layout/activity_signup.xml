@@ -100,6 +100,16 @@
             android:textColor="@color/white"
             android:text="@string/signup" />
 
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Already signed up?"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <ProgressBar
