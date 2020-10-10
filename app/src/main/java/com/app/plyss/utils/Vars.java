@@ -16,5 +16,16 @@ public class Vars {
         idSharedPref = context.getSharedPreferences(AppGlobals.app_unique_prefs, Context.MODE_PRIVATE);
     }
 
+    public void saveUserEmail(String email) {
+        if (!idSharedPref.contains(AppGlobals.user_email)) {
+            SharedPreferences.Editor editor = idSharedPref.edit();
+            editor.putString(AppGlobals.user_email, email);
+            editor.apply();
+        }
+    }
+
+    public String getSignedUserEmail() {
+        return  idSharedPref.getString(AppGlobals.user_email, "");
+    }
 
 }

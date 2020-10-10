@@ -59,18 +59,5 @@ public class AppUtils {
         return formatter.format(num);
     }
 
-    public static void saveUserEmail(String email, Context context) {
-        SharedPreferences idSharedPref = context.getSharedPreferences(AppGlobals.app_unique_prefs, Context.MODE_PRIVATE);
 
-        if (!idSharedPref.contains(AppGlobals.user_email)) {
-            SharedPreferences.Editor editor = idSharedPref.edit();
-            editor.putString(AppGlobals.user_email, email);
-            editor.apply();
-        }
-    }
-
-    public static String getSignedUserEmail(Context context) {
-        SharedPreferences idSharedPref = context.getSharedPreferences(AppGlobals.app_unique_prefs, Context.MODE_PRIVATE);
-        return  idSharedPref.getString(AppGlobals.user_email, "");
-    }
 }

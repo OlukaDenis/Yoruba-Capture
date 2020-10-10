@@ -17,7 +17,9 @@ import androidx.navigation.Navigation;
 
 import com.app.plyss.R;
 import com.app.plyss.utils.AppGlobals;
+import com.app.plyss.utils.Vars;
 import com.google.android.material.button.MaterialButton;
+import com.google.errorprone.annotations.Var;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,9 +37,6 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     private HomeViewModel homeViewModel;
     private NavController navController;
-    private FirebaseAnalytics mFirebaseAnalytics;
-    private FirebaseFirestore db;
-    private FirebaseCrashlytics crashlytics;
 
     private MaterialButton open_form;
     @BindView(R.id.user_name)
@@ -48,6 +47,7 @@ public class HomeFragment extends Fragment {
 
     TextView individualData;
     private TextView householdData;
+    private Vars vars;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,11 +56,12 @@ public class HomeFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, root);
-        db = FirebaseFirestore.getInstance();
-        crashlytics = FirebaseCrashlytics.getInstance();
+        vars = new Vars(requireActivity());
+
+        vars.yorubaApp.crashlytics = FirebaseCrashlytics.getInstance();
         //Init firebase analytics
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
-        mFirebaseAnalytics.setCurrentScreen(requireActivity(), this.getClass().getSimpleName(),
+        vars.yorubaApp.mFirebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
+        vars.yorubaApp.mFirebaseAnalytics.setCurrentScreen(requireActivity(), this.getClass().getSimpleName(),
                 this.getClass().getSimpleName());
 
 
@@ -68,7 +69,10 @@ public class HomeFragment extends Fragment {
         householdData = root.findViewById(R.id.household_data_number);
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-        userName.setText(AppGlobals.logged_in_user_email);
+
+        if (vars.yorubaApp.currentUser != null) {
+            userName.setText(vars.yorubaApp.currentUser.getEmail());
+        }
 
         statistics();
         householdStats();
@@ -81,7 +85,7 @@ public class HomeFragment extends Fragment {
         navController.navigate(R.id.navigation_add_form);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Add new data form");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+        vars.yorubaApp.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 
 
@@ -91,38 +95,38 @@ public class HomeFragment extends Fragment {
         navController.navigate(R.id.navigation_add_household);
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Add new household info");
-        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
+        vars.yorubaApp.mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 
     private void statistics() {
-        db.collection(INDIVIDUAL_CAPTURES).get()
+        vars.yorubaApp.db.collection(INDIVIDUAL_CAPTURES).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         int count = Objects.requireNonNull(task.getResult()).size();
                         Log.d("Captured Data: ", String.valueOf(count));
                         individualData.setText(String.valueOf(count));
                     } else {
-                        crashlytics.recordException(Objects.requireNonNull(task.getException()));
+                        vars.yorubaApp.crashlytics.recordException(Objects.requireNonNull(task.getException()));
                         Log.d(TAG, "Error getting captures: ", task.getException());
                     }
                 })
-                .addOnFailureListener(e -> crashlytics.recordException(e));
+                .addOnFailureListener(e ->  vars.yorubaApp.crashlytics.recordException(e));
     }
 
     private void householdStats() {
-        db.collection(HOUSEHOLD_CAPTURES).get()
+        vars.yorubaApp.db.collection(HOUSEHOLD_CAPTURES).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         int count = Objects.requireNonNull(task.getResult()).size();
                         Log.d("Captured Data: ", String.valueOf(count));
                         householdData.setText(String.valueOf(count));
                     } else {
-                        crashlytics.recordException(Objects.requireNonNull(task.getException()));
+                        vars.yorubaApp.crashlytics.recordException(Objects.requireNonNull(task.getException()));
                         Log.e(TAG, "Error getting captures: ", task.getException());
                     }
                 })
                 .addOnFailureListener(e -> {
-                    crashlytics.recordException(e);
+                    vars.yorubaApp.crashlytics.recordException(e);
                     Log.e(TAG, "householdStats: ",e );
                 });
     }

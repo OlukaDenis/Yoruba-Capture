@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void checkLoggedInUser() {
-        String userEmail = AppUtils.getSignedUserEmail(this);
+        String userEmail = vars.getSignedUserEmail();
         User mUser = loginViewModel.getUser(userEmail);
         if (mUser != null) {
             AppGlobals.logged_in_user_email = userEmail;
@@ -106,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser currentUser = vars.yorubaApp.currentUser;
 
                 if (currentUser != null) {
-                    AppUtils.saveUserEmail(email, this);
+                    vars.saveUserEmail(email);
                     user.setEmail(currentUser.getEmail());
                     user.setUuid(currentUser.getUid());
                     user.setName(currentUser.getDisplayName());
@@ -116,13 +117,13 @@ public class LoginActivity extends AppCompatActivity {
                     loginViewModel.addUser(user);
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } else {
-                    Toast.makeText(this, "No user found", Toast.LENGTH_SHORT).show();
+                    Toasty.error(this, "No user found", Toasty.LENGTH_SHORT).show();
                     enableBtn();
                 }
             } else {
                 // If sign in fails, display a message to the user.
                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                Toast.makeText(this, "Wrong email or password", Toast.LENGTH_SHORT).show();
+                Toasty.error(this, "Wrong email or password", Toasty.LENGTH_SHORT).show();
                 reset();
                 enableBtn();
             }
