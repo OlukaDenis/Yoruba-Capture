@@ -17,8 +17,10 @@ import android.widget.Toast;
 import com.app.plyss.R;
 import com.app.plyss.data.model.User;
 import com.app.plyss.ui.HomeActivity;
+import com.app.plyss.ui.signup.SignupActivity;
 import com.app.plyss.utils.AppGlobals;
 import com.app.plyss.utils.AppUtils;
+import com.app.plyss.utils.Vars;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,16 +32,15 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private LoginViewModel loginViewModel;
-    EditText email;
-    EditText password;
-    ProgressBar loading;
+    private EditText email;
+    private EditText password;
+    private ProgressBar loading;
 
     @BindView(R.id.login)
     Button loginButton;
-
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
+    
     private User user;
+    private Vars vars;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
-        mAuth = FirebaseAuth.getInstance();
+        vars = new Vars(this);
         user = new User();
 
         email = findViewById(R.id.email);
@@ -93,11 +94,16 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @OnClick(R.id.tvCreateAccount)
+    void goToSignup() {
+        startActivity(new Intent(getApplicationContext(), SignupActivity.class));
+    }
+
     public void signIn(String email, String password){
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+        vars.yorubaApp.mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "signInWithEmail:success");
-                currentUser = mAuth.getCurrentUser();
+                FirebaseUser currentUser = vars.yorubaApp.currentUser;
 
                 if (currentUser != null) {
                     AppUtils.saveUserEmail(email, this);
@@ -135,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
         loading.setVisibility(View.VISIBLE);
         loginButton.setBackgroundResource(R.drawable.inactive_button_bg);
     }
+
     private void reset(){
         email.setText("");
         password.setText("");

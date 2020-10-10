@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -15,7 +16,7 @@ public class YorubaApp extends Application {
     public FirebaseAnalytics mFirebaseAnalytics;
     public FirebaseAuth mAuth;
     public FirebaseFirestore db;
-    public String firebaseid;
+    public FirebaseUser currentUser;
     public FirebaseStorage mStorageRef;
     public FirebaseCrashlytics crashlytics;
     public PhoneAuthProvider phoneAuth;
@@ -36,6 +37,7 @@ public class YorubaApp extends Application {
         mStorageRef = FirebaseStorage.getInstance();
         crashlytics = FirebaseCrashlytics.getInstance();
         phoneAuth = PhoneAuthProvider.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)

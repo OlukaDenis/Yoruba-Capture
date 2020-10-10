@@ -8,17 +8,23 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".YorubaApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.forgot_password.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.forgot_password.ForgotPasswordActivity">
+
+        </activity>
         <activity
             android:name=".ui.HomeActivity"
-            android:label="@string/title_activity_home"></activity>
+            android:label="@string/title_activity_home">
+
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -41,11 +47,15 @@
         </activity>
         <activity
             android:name=".ui.signup.SignupActivity"
-            android:theme="@style/WithNoActionBar"></activity>
+            android:theme="@style/WithNoActionBar">
+
+        </activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/WithNoActionBar"></activity>
+            android:theme="@style/WithNoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.app.plyss.ui.signup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,29 +15,50 @@ import android.widget.Toast;
 
 import com.app.plyss.R;
 import com.app.plyss.data.model.User;
+import com.app.plyss.ui.HomeActivity;
 import com.app.plyss.ui.login.LoginActivity;
+import com.app.plyss.utils.AppGlobals;
+import com.app.plyss.utils.AppUtils;
+import com.app.plyss.utils.Vars;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private SignupViewModel viewModel;
 
-    EditText user_name;
-    EditText user_mail;
-    EditText user_phone;
-    EditText user_password;
+    @BindView(R.id.username)
+    EditText userName;
+
+    @BindView(R.id.user_email)
+    EditText userMail;
+
+    @BindView(R.id.user_phone)
+    EditText userPhone;
+
+    @BindView(R.id.user_password)
+    EditText userPassword;
 
     @BindView(R.id.signup_loading)
-    ProgressBar signup_loading;
+    ProgressBar signupLoading;
 
     @BindView(R.id.signup)
-    Button signup_btn;
+    Button signupBtn;
 
+    private User user;
+    private Vars vars;
+    private UserProfileChangeRequest profileChangeRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +66,8 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         ButterKnife.bind(this);
-
-        user_name = findViewById(R.id.username);
-        user_mail = findViewById(R.id.user_email);
-        user_phone = findViewById(R.id.user_phone);
-        user_password = findViewById(R.id.user_password);
-
+        vars = new Vars(this);
+        user = new User();
 
         SignupViewModelFactory factory = new SignupViewModelFactory(this.getApplication());
         viewModel = new ViewModelProvider(this, factory).get(SignupViewModel.class);
@@ -64,54 +82,92 @@ public class SignupActivity extends AppCompatActivity {
     void saveUser() {
 
         String uuid = UUID.randomUUID().toString();
-        String email =  user_mail.getText().toString().trim();
-        String name =  user_name.getText().toString().trim();
-        String phone = user_phone.getText().toString().trim();
-        String password = user_password.getText().toString().trim();
-
+        String email =  userMail.getText().toString().trim();
+        String name =  userName.getText().toString().trim();
+        String phone = userPhone.getText().toString().trim();
+        String password = userPassword.getText().toString().trim();
 
         if (name.isEmpty()) {
-            user_name.setError("Field must not be empty");
-            user_name.requestFocus();
+            userName.setError("Field must not be empty");
+            userName.requestFocus();
         } else if (phone.isEmpty()) {
-            user_phone.setError("Field must not be empty");
-            user_phone.requestFocus();
+            userPhone.setError("Field must not be empty");
+            userPhone.requestFocus();
         } else if (!viewModel.isEmailValid(email)) {
-            user_mail.setError("Invalid email");
-            user_mail.requestFocus();
+            userMail.setError("Invalid email");
+            userMail.requestFocus();
         } else if (!viewModel.isPasswordValid(password)) {
-            user_password.setError("Password must be more than 5 characters");
-            user_password.requestFocus();
+            userPassword.setError("Password must be more than 5 characters");
+            userPassword.requestFocus();
         } else {
-            signup_loading.setVisibility(View.VISIBLE);
-            signup_btn.setEnabled(false);
-            signup_btn.setBackgroundResource(R.drawable.inactive_button_bg);
 
-            User user = new User(
-                    uuid,
-                    name,
-                    email,
-                    phone,
-                    password
-            );
+            user.setEmail(email);
+            user.setName(name);
+            user.setPhone(phone);
+            user.setPassword(password);
 
-            User existing = viewModel.existingUser(email);
-            if (existing != null) {
-                Toast.makeText(this," User exists", Toast.LENGTH_SHORT).show();
-                signup_loading.setVisibility(View.GONE);
-                signup_btn.setEnabled(true);
-                signup_btn.setBackgroundResource(R.drawable.button_background);
-            } else {
-                viewModel.addUser(user);
-                Log.d(TAG, "User saved: ");
-                startActivity(new Intent(this, LoginActivity.class));
-                finish();
-            }
+            profileChangeRequest = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .build();
 
+
+            createNewUser(email, password);
         }
     }
 
+    private void createNewUser(String email, String password) {
+        disableBtn();
+        vars.yorubaApp.mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "createUserWithEmail:success");
+                        Toasty.success(getApplicationContext(), "Your account has been created successfully.", Toasty.LENGTH_LONG ).show();
 
+                        FirebaseUser firebaseUser = vars.yorubaApp.currentUser;
+                        if (firebaseUser != null) {
+                            user.setUuid(firebaseUser.getUid());
+                            firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Log.d(TAG, "User profile updated ");
+                                    saveUserDetails(firebaseUser.getUid());
+                                }
+                            });
+                        }
+                    } else {
+                        Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                        String err = Objects.requireNonNull(task.getException()).getMessage();
+                        Toasty.error(getApplicationContext(), err, Toasty.LENGTH_LONG ).show();
+                        enableBtn();
+                    }
+                });
 
+    }
+
+    private void saveUserDetails(String uid) {
+        Task<Void> newUser = vars.yorubaApp.db.collection(AppGlobals.USERS).document(uid).set(user);
+        newUser.addOnSuccessListener(aVoid -> {
+            Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "addNewRegisteredUser: SUCCESS!!");
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }).addOnFailureListener(e -> {
+            Log.e(TAG, "addNewRegisteredUser: ERROR -> ", e );
+            Toasty.error(getApplicationContext(), Objects.requireNonNull(e.getMessage()), Toasty.LENGTH_LONG).show();
+            enableBtn();
+        });
+
+    }
+
+    private void enableBtn() {
+        signupLoading.setVisibility(View.GONE);
+        signupBtn.setEnabled(true);
+        signupBtn.setBackgroundResource(R.drawable.button_background);
+    }
+
+    private void disableBtn() {
+        signupBtn.setEnabled(false);
+        signupLoading.setVisibility(View.VISIBLE);
+        signupBtn.setBackgroundResource(R.drawable.inactive_button_bg);
+    }
 
 }
