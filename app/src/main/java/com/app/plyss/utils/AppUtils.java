@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Patterns;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -59,5 +60,13 @@ public class AppUtils {
         return formatter.format(num);
     }
 
+    // A placeholder username validation check
+    public static boolean isUserNameValid(String email) {
+        return email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 
+    // A placeholder password validation check
+    public static boolean isPasswordValid(String password) {
+        return password != null && password.trim().length() > 5;
+    }
 }

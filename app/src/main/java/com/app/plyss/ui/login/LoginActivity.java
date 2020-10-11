@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.app.plyss.R;
 import com.app.plyss.data.model.User;
 import com.app.plyss.ui.HomeActivity;
+import com.app.plyss.ui.forgot_password.ForgotPasswordActivity;
 import com.app.plyss.ui.signup.SignupActivity;
 import com.app.plyss.utils.AppGlobals;
 import com.app.plyss.utils.AppUtils;
@@ -75,6 +76,11 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
+    }
+
+    @OnClick(R.id.tvForgotPassword)
+    void goToForgot() {
+        startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class));
     }
 
     @OnClick(R.id.login)

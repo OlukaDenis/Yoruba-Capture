@@ -56,4 +56,6 @@
     <string name="no_of_wives_if_married">No. of Wives (If Married)</string>
     <string name="no_of_children">No. of Children</string>
     <string name="residence">Residence</string>
+    <string name="request_password">Request Password</string>
+    <string name="password_instructions">Enter your email below. The password reset link will be sent to this email. You will then follow the link to reset your password.</string>
 </resources>
