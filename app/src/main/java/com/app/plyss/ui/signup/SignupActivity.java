@@ -122,8 +122,9 @@ public class SignupActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Log.d(TAG, "createUserWithEmail:success");
                         Toasty.success(getApplicationContext(), "Your account has been created successfully.", Toasty.LENGTH_LONG ).show();
+                        startActivity(new Intent(this, LoginActivity.class));
 
-                        FirebaseUser firebaseUser = vars.yorubaApp.currentUser;
+                        FirebaseUser firebaseUser = vars.yorubaApp.mAuth.getCurrentUser();
                         if (firebaseUser != null) {
                             user.setUuid(firebaseUser.getUid());
                             firebaseUser.updateProfile(profileChangeRequest).addOnCompleteListener(task1 -> {
@@ -148,7 +149,6 @@ public class SignupActivity extends AppCompatActivity {
         newUser.addOnSuccessListener(aVoid -> {
             Toast.makeText(this, "User created", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "addNewRegisteredUser: SUCCESS!!");
-            startActivity(new Intent(this, LoginActivity.class));
             finish();
         }).addOnFailureListener(e -> {
             Log.e(TAG, "addNewRegisteredUser: ERROR -> ", e );

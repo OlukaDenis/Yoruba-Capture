@@ -123,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginViewModel.addUser(user);
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } else {
-                    Toasty.error(this, "No user found", Toasty.LENGTH_SHORT).show();
+                    Toasty.error(this, "Error, please try again", Toasty.LENGTH_SHORT).show();
                     enableBtn();
                 }
             } else {
